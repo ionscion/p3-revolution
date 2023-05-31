@@ -19,7 +19,7 @@ let theme = createTheme({
 
 function Root() {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
-  const { fetchClients, getToken, apiInfo, accessToken } =
+  const { getToken, apiInfo, accessToken } =
     useContext(ClientContext);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function Root() {
 
   useEffect(() => {
     if (accessToken) {
-      fetchClients();
+      // fetchClients();
     }
   }, [accessToken]);
 

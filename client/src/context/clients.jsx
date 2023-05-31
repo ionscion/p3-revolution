@@ -1,9 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import jwt_decode from "jwt-decode";
-import { useQuery } from "@apollo/client";
-import { GET_CLIENTNOAUTH} from "../utils/queries";
-
+import { useQuery, useLazyQuery} from "@apollo/client";
+import { GET_CLIENTNOAUTH, GET_CLIENTS } from "../utils/queries";
 
 const ClientContext = createContext();
 
@@ -16,15 +15,41 @@ function Provider({ children }) {
 
   const { loading, data } = useQuery(GET_CLIENTNOAUTH);
 
-  
+  const [fetchClientsQuery, { loading: fetchLoading, data: fetchData }] = useLazyQuery(GET_CLIENTS, {
+    onCompleted: (data) => {
+      if (data && data.getClients) {
+        setApiInfo(data.getClients);
+      }
+    },
+  });
 
   const getToken = async () => {
     const token = await getIdTokenClaims();
     setAccessToken(token.__raw); // get the actual token from the response
   };
+  useEffect(() => {
+    if (accessToken) {
+      const user_id = jwt_decode(accessToken).sub.slice(6);
+      console.log(user_id);
+      fetchClientsQuery({ variables: { user_id } });
+    }
+  }, [accessToken, fetchClientsQuery]);
+
+  useEffect(() => {
+    if (fetchData) {
+      console.log(fetchData);
+      const { getClients } = fetchData;
+      console.log(getClients);
+      setApiInfo(getClients);
+    }
+  }, [fetchData]);
+  
+  // const { load, authData } = useQuery(GET_CLIENTS, {
+  //   variables: { user_id: jwt_decode(accessToken).sub.slice(6) },
+  // });
 
   //need to fix this so only pulls the clients who have the same user_id as the lawyer
-  const fetchClients = async () => {
+  const clientQuery = async () => {
     const user_id = jwt_decode(accessToken).sub.slice(6);
 
     console.log(user_id);
@@ -32,6 +57,17 @@ function Provider({ children }) {
     console.log(data.getClientNoAuth);
     setApiInfo(data.getClientNoAuth);
   };
+
+//old works with no auth
+
+  // const fetchClients = async () => {
+  //   const user_id = jwt_decode(accessToken).sub.slice(6);
+
+  //   console.log(user_id);
+  //   console.log(data);
+  //   console.log(data.getClientNoAuth);
+  //   setApiInfo(data.getClientNoAuth);
+  // };
 
   // const fetchClients = async () => {
   //   const user_id = jwt_decode(accessToken).sub.slice(6);
@@ -104,7 +140,7 @@ function Provider({ children }) {
   };
 
   const valueToShare = {
-    fetchClients,
+    // fetchClients,
     getToken,
     apiInfo,
     accessToken,
