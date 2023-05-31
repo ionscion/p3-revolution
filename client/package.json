@@ -20,7 +20,6 @@
     "classnames": "^2.3.2",
     "dotenv": "^16.0.3",
     "express": "^4.17.3",
-    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
     "localforage": "^1.10.0",
@@ -34,7 +33,9 @@
     "react-router": "^6.10.0",
     "react-router-dom": "^6.10.0",
     "sequelize": "^6.30.0",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "@apollo/client": "^3.7.14",
+    "graphql": "^16.6.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

@@ -1,6 +1,9 @@
 import { createContext, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import jwt_decode from "jwt-decode";
+import { useQuery } from "@apollo/client";
+import { GET_CLIENTS } from "../utils/queries";
+
 
 const ClientContext = createContext();
 
@@ -11,24 +14,34 @@ function Provider({ children }) {
   const [userId, setUserId] = useState(null);
   const [clientData, setClientData] = useState(null);
 
+  const { loading, data } = useQuery(GET_CLIENTS);
+
   const getToken = async () => {
     const token = await getIdTokenClaims();
     setAccessToken(token.__raw); // get the actual token from the response
   };
 
+  //fix line 27
   const fetchClients = async () => {
     const user_id = jwt_decode(accessToken).sub.slice(6);
     console.log(user_id);
-    fetch(`/api/v1/clients/${user_id}`, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-    })
-      .then((data) => data.json())
-      .then((data) => setApiInfo(data))
-      .catch((error) => console.error(error));
+    // setApiInfo(data);
+    console.log(apiInfo);
   };
+
+  // const fetchClients = async () => {
+  //   const user_id = jwt_decode(accessToken).sub.slice(6);
+  //   console.log(user_id);
+  //   fetch(`/api/v1/clients/${user_id}`, {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: "Bearer " + accessToken,
+  //     },
+  //   })
+  //     .then((data) => data.json())
+  //     .then((data) => setApiInfo(data))
+  //     .catch((error) => console.error(error));
+  // };
 
   const getSingleClient = async (id) => {
     fetch(`/api/v1/clients/details/${id}`, {

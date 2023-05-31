@@ -7,7 +7,17 @@ import ErrorPage from "./error-page";
 import { ClientProfileDetails } from "./routes/ClientDetails";
 import ClientDataTable from "./components/ClientDataTable";
 import { Provider } from "./context/clients";
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+} from "@apollo/client";
 
+const client = new ApolloClient({
+  uri: "./graphql", // Replace with your GraphQL endpoint
+  cache: new InMemoryCache(),
+});
 
 const router = createBrowserRouter([
   {
@@ -38,8 +48,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       redirect_uri: window.location.origin,
     }}
   >
-    <Provider>
-      <RouterProvider router={router} />
-    </Provider>
+    <ApolloProvider client={client}>
+      <Provider>
+        <RouterProvider router={router} />
+      </Provider>
+    </ApolloProvider>
   </Auth0Provider>
 );
