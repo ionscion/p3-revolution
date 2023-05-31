@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 import { useOutletContext, Link, useNavigate } from "react-router-dom";
 
 const columns = [
-  { field: "id", headerName: "Id", width: 200 },
+  // { field: "id", headerName: "Id", width: 200 },
   { field: "firstName", headerName: "First name", width: 130 },
   { field: "middleName", headerName: "Middle name", width: 130 },
   { field: "lastName", headerName: "Last name", width: 130 },
@@ -29,7 +29,7 @@ export default function DataTable() {
       //  let formattedPhone = user.phone_number;
       // formattedPhone.toString().replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
       return {
-        id: user.id,
+        id: user._id,
         lastName: user.last_name,
         middleName: user.middle_name,
         firstName: user.first_name,

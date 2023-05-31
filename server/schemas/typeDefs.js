@@ -25,7 +25,8 @@ const typeDefs = gql`
 
   type Query {
     me: User
-    getClients: [Client]
+    getClients(user_id: String!): [Client]
+    getClientNoAuth: [Client]
   }
 
   type Mutation {

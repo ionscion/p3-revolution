@@ -2,31 +2,35 @@ import { createContext, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import jwt_decode from "jwt-decode";
 import { useQuery } from "@apollo/client";
-import { GET_CLIENTS } from "../utils/queries";
+import { GET_CLIENTNOAUTH} from "../utils/queries";
 
 
 const ClientContext = createContext();
 
 function Provider({ children }) {
-  const [apiInfo, setApiInfo] = useState(null);
+  const [apiInfo, setApiInfo] = useState([]);
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
   const [accessToken, setAccessToken] = useState(null);
   const [userId, setUserId] = useState(null);
   const [clientData, setClientData] = useState(null);
 
-  const { loading, data } = useQuery(GET_CLIENTS);
+  const { loading, data } = useQuery(GET_CLIENTNOAUTH);
+
+  
 
   const getToken = async () => {
     const token = await getIdTokenClaims();
     setAccessToken(token.__raw); // get the actual token from the response
   };
 
-  //fix line 27
+  //need to fix this so only pulls the clients who have the same user_id as the lawyer
   const fetchClients = async () => {
     const user_id = jwt_decode(accessToken).sub.slice(6);
+
     console.log(user_id);
-    // setApiInfo(data);
-    console.log(apiInfo);
+    console.log(data);
+    console.log(data.getClientNoAuth);
+    setApiInfo(data.getClientNoAuth);
   };
 
   // const fetchClients = async () => {
