@@ -10,53 +10,43 @@ function Provider({ children }) {
   const [apiInfo, setApiInfo] = useState([]);
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
   const [accessToken, setAccessToken] = useState(null);
-  const [userId, setUserId] = useState(null);
   const [clientData, setClientData] = useState(null);
+  const [user_id, setUser_id] = useState(""); // Declare user_id here
 
-  const { loading, data } = useQuery(GET_CLIENTNOAUTH);
+
+  // const { loading, data } = useQuery(GET_CLIENTNOAUTH);
 
   const [fetchClientsQuery, { loading: fetchLoading, data: fetchData }] = useLazyQuery(GET_CLIENTS, {
+    variables: {
+      user_id: user_id, // Pass the user_id obtained from the token
+    },
     onCompleted: (data) => {
       if (data && data.getClients) {
         setApiInfo(data.getClients);
       }
     },
   });
+  
 
   const getToken = async () => {
     const token = await getIdTokenClaims();
     setAccessToken(token.__raw); // get the actual token from the response
   };
+
   useEffect(() => {
     if (accessToken) {
       const user_id = jwt_decode(accessToken).sub.slice(6);
-      console.log(user_id);
-      fetchClientsQuery({ variables: { user_id } });
+      setUser_id(user_id);
     }
-  }, [accessToken, fetchClientsQuery]);
-
-  useEffect(() => {
-    if (fetchData) {
-      console.log(fetchData);
-      const { getClients } = fetchData;
-      console.log(getClients);
-      setApiInfo(getClients);
-    }
-  }, [fetchData]);
+  }, [accessToken]);
   
-  // const { load, authData } = useQuery(GET_CLIENTS, {
-  //   variables: { user_id: jwt_decode(accessToken).sub.slice(6) },
-  // });
+  useEffect(() => {
+    if (user_id) {
+      fetchClientsQuery({ variables: { userId: user_id } });
+    }
+  }, [user_id, fetchClientsQuery]);
 
-  //need to fix this so only pulls the clients who have the same user_id as the lawyer
-  const clientQuery = async () => {
-    const user_id = jwt_decode(accessToken).sub.slice(6);
 
-    console.log(user_id);
-    console.log(data);
-    console.log(data.getClientNoAuth);
-    setApiInfo(data.getClientNoAuth);
-  };
 
 //old works with no auth
 
