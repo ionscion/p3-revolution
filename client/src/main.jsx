@@ -38,7 +38,7 @@ import { setContext } from '@apollo/client/link/context';
 // });
 
 const client = new ApolloClient({
-  uri: "./graphql", // Replace with your GraphQL endpoint
+  uri: "/graphql", // Replace with your GraphQL endpoint
   cache: new InMemoryCache(),
 });
 

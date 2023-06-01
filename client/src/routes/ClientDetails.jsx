@@ -11,6 +11,8 @@ import {
   Unstable_Grid2 as Grid,
 } from "@mui/material";
 import { useLoaderData } from "react-router-dom"
+import { useQuery, useLazyQuery } from "@apollo/client";
+import { GET_CLIENT } from "../utils/queries";
 
 
 export const ClientProfileDetails = () => {
@@ -25,45 +27,75 @@ export const ClientProfileDetails = () => {
     citizenship: "",
     marital: "",
   });
+     // TODO - need to update REST API to gql using the GET_CLIENT query
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(`/api/v1/clients/details/${id}`, {
+  //         method: "GET",
+  //         headers: {
+  //           "Cache-Control": "no-cache",
+  //           Pragma: "no-cache",
+  //           Expires: "0",
+  //         },
+  //       });
   
+  //       if (response.ok) {
+  //         const client = await response.json();
+  //         console.log(client.first_name);
+  //         setValues((prevState) => ({
+  //           ...prevState,
+  //           firstName: client.first_name,
+  //           lastName: client.last_name,
+  //           email: client.email,
+  //           phone: client.phone_number,
+  //           dob: client.birthday,
+  //           gender: client.gender ? client.gender : "",
+  //           citizenship: client.citizenship ? client.citizenship : "",
+  //           marital: client.marital_status ? client.marital_status : "",
+  //         }));
+  //       } else {
+  //         console.error("Error fetching client data");
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  
+  //   fetchData();
+  // }, []);
+  
+  // const { loading, error, data } = useQuery(GET_CLIENT, {
+  //   variables: { id: id },
+  // });
+
+  const [fetchClient, { loading, error, data }] = useLazyQuery(GET_CLIENT, {
+    variables: { id: id },
+    onError: (error) => {
+      console.error("Error fetching client data", error);
+    },
+  });
+
   useEffect(() => {
-    // TODO - need to update REST API to gql
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/v1/clients/details/${id}`, {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-cache",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-        });
-  
-        if (response.ok) {
-          const client = await response.json();
-          console.log(client.first_name);
-          setValues((prevState) => ({
-            ...prevState,
-            firstName: client.first_name,
-            lastName: client.last_name,
-            email: client.email,
-            phone: client.phone_number,
-            dob: client.birthday,
-            gender: client.gender ? client.gender : "",
-            citizenship: client.citizenship ? client.citizenship : "",
-            marital: client.marital_status ? client.marital_status : "",
-          }));
-        } else {
-          console.error("Error fetching client data");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    fetchData();
-  }, []);
-  
+    fetchClient();
+  }, [fetchClient]);
+
+  useEffect(() => {
+    if (data && data.getClientById) {
+      const client = data.getClientById;
+      setValues((prevState) => ({
+        ...prevState,
+        firstName: client.first_name,
+        lastName: client.last_name,
+        email: client.email,
+        phone: client.phone_number,
+        dob: client.birthday,
+        gender: client.gender ? client.gender : "",
+        citizenship: client.citizenship ? client.citizenship : "",
+        marital: client.marital_status ? client.marital_status : "",
+      }));
+    }
+  }, [data]);
 
   const handleChange = useCallback((event) => {
     setValues((prevState) => ({

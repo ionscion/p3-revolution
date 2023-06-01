@@ -35,3 +35,37 @@ query GetClientNoAuth {
   }
 }
 `;
+
+export const GET_CLIENT = gql`
+query GetClientById($id: ID!) {
+  getClientById(_id: $id) {
+    birthday
+    email
+    created_at
+    first_name
+    is_active
+    last_name
+    middle_name
+    phone_number
+    user_id
+    _id
+    updated_at
+  }
+}
+`;
+
+// query Query($id: ID!) {
+//   getClientById(_id: $id) {
+//     birthday
+//     email
+//     created_at
+//     first_name
+//     is_active
+//     last_name
+//     middle_name
+//     phone_number
+//     user_id
+//     _id
+//     updated_at
+//   }
+// }
