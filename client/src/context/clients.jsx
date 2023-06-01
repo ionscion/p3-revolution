@@ -46,7 +46,7 @@ function Provider({ children }) {
     }
   }, [user_id, fetchClientsQuery]);
 
-
+// TODO - need to update REST API to gql - specifically the mutation for creating clients on Client Details component
 
 //old works with no auth
 
@@ -73,72 +73,72 @@ function Provider({ children }) {
   //     .catch((error) => console.error(error));
   // };
 
-  const getSingleClient = async (id) => {
-    fetch(`/api/v1/clients/details/${id}`, {
-      method: "GET",
-      headers: {
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
-        Expires: "0",
-        Authorization: "Bearer " + accessToken,
-      },
-    })
-      .then((data) => data.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
-  };
+  // const getSingleClient = async (id) => {
+  //   fetch(`/api/v1/clients/details/${id}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Cache-Control": "no-cache",
+  //       Pragma: "no-cache",
+  //       Expires: "0",
+  //       Authorization: "Bearer " + accessToken,
+  //     },
+  //   })
+  //     .then((data) => data.json())
+  //     .then((data) => console.log(data))
+  //     .catch((error) => console.error(error));
+  // };
 
-  const getClient = async (id) => {
-    try {
-      if (!apiInfo) {
-        await fetchClients();
-      }
-      const client = apiInfo.find((client) => client.id === id);
-      return client;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getClient = async (id) => {
+  //   try {
+  //     if (!apiInfo) {
+  //       await fetchClients();
+  //     }
+  //     const client = apiInfo.find((client) => client.id === id);
+  //     return client;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const createClientAuth = async (data) => {
-    const user_id = jwt_decode(accessToken).sub.slice(6);
-    data.user_id = user_id; // Add user_id to the data object
-    fetch(`/api/v1/clients/auth`, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => setApiInfo(data))
-      .catch((error) => console.error(error));
-  };
+  // const createClientAuth = async (data) => {
+  //   const user_id = jwt_decode(accessToken).sub.slice(6);
+  //   data.user_id = user_id; // Add user_id to the data object
+  //   fetch(`/api/v1/clients/auth`, {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: "Bearer " + accessToken,
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(data),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => setApiInfo(data))
+  //     .catch((error) => console.error(error));
+  // };
 
-  const createClient = async (data) => {
-    fetch(`/api/v1/clients/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => setApiInfo(data))
-      .catch((error) => console.error(error));
-  };
+  // const createClient = async (data) => {
+  //   fetch(`/api/v1/clients/`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(data),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => setApiInfo(data))
+  //     .catch((error) => console.error(error));
+  // };
 
   const valueToShare = {
     // fetchClients,
     getToken,
     apiInfo,
-    accessToken,
-    createClient,
-    createClientAuth,
-    getSingleClient,
-    getClient,
-    clientData,
+    // accessToken,
+    // createClient,
+    // createClientAuth,
+    // getSingleClient,
+    // getClient,
+    // clientData,
   };
 
   return (

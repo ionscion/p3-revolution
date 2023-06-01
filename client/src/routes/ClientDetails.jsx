@@ -27,6 +27,7 @@ export const ClientProfileDetails = () => {
   });
   
   useEffect(() => {
+    // TODO - need to update REST API to gql
     const fetchData = async () => {
       try {
         const response = await fetch(`/api/v1/clients/details/${id}`, {

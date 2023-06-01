@@ -1,7 +1,5 @@
 import { gql } from "@apollo/client";
 
-//top query may be wrong but that's the one needing to fix for auth
-
 export const GET_CLIENTS = gql`
 query GetClients($userId: String!) {
   getClients(user_id: $userId) {

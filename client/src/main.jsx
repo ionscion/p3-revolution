@@ -42,6 +42,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+//Router for adding additional pages to app
 const router = createBrowserRouter([
   {
     path: "/",
