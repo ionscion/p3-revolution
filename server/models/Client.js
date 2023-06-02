@@ -1,11 +1,10 @@
-const { Schema, model} = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const clientSchema = new Schema(
   {
     first_name: {
       type: String,
       required: true,
-      unique: true,
     },
     middle_name: String,
     last_name: {
@@ -37,6 +36,27 @@ const clientSchema = new Schema(
     user_id: {
       type: String,
       required: true,
+    },
+
+    street: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    city: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    state: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    postcode: {
+      type: Number,
+      required: false,
+      default: null,
     },
   },
   {

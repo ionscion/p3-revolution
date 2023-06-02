@@ -17,10 +17,23 @@ const typeDefs = gql`
     email: String!
     phone_number: String!
     birthday: String
+    street: String
+    city: String
+    state: String
+    postcode: Int
     is_active: Boolean
     created_at: String
     updated_at: String
     user_id: String!
+  }
+
+  type Address {
+    _id: ID
+    street: String!
+    city: String!
+    state: String!
+    postcode: Int!
+    client_id: String!
   }
 
   type Query {
