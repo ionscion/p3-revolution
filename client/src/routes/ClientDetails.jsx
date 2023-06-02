@@ -26,48 +26,13 @@ export const ClientProfileDetails = () => {
     gender: "",
     citizenship: "",
     marital: "",
+    street: "",
+    city: "",
+    state: "",
+    postcode: "",
   });
      // TODO - need to update REST API to gql using the GET_CLIENT query
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`/api/v1/clients/details/${id}`, {
-  //         method: "GET",
-  //         headers: {
-  //           "Cache-Control": "no-cache",
-  //           Pragma: "no-cache",
-  //           Expires: "0",
-  //         },
-  //       });
   
-  //       if (response.ok) {
-  //         const client = await response.json();
-  //         console.log(client.first_name);
-  //         setValues((prevState) => ({
-  //           ...prevState,
-  //           firstName: client.first_name,
-  //           lastName: client.last_name,
-  //           email: client.email,
-  //           phone: client.phone_number,
-  //           dob: client.birthday,
-  //           gender: client.gender ? client.gender : "",
-  //           citizenship: client.citizenship ? client.citizenship : "",
-  //           marital: client.marital_status ? client.marital_status : "",
-  //         }));
-  //       } else {
-  //         console.error("Error fetching client data");
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  
-  //   fetchData();
-  // }, []);
-  
-  // const { loading, error, data } = useQuery(GET_CLIENT, {
-  //   variables: { id: id },
-  // });
 
   const [fetchClient, { loading, error, data }] = useLazyQuery(GET_CLIENT, {
     variables: { id: id },
@@ -93,6 +58,10 @@ export const ClientProfileDetails = () => {
         gender: client.gender ? client.gender : "",
         citizenship: client.citizenship ? client.citizenship : "",
         marital: client.marital_status ? client.marital_status : "",
+        street: client.street ? client.street : "",
+        city: client.city ? client.city : "",
+        state: client.state ? client.state : "",
+        postcode: client.postcode ? client.postcode : "",
       }));
     }
   }, [data]);
@@ -194,6 +163,46 @@ export const ClientProfileDetails = () => {
                   onChange={handleChange}
                   required
                   value={values.marital || ""}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label="Address"
+                  name="street"
+                  onChange={handleChange}
+                  required
+                  value={values.street || ""}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label="City"
+                  name="city"
+                  onChange={handleChange}
+                  required
+                  value={values.city || ""}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label="State"
+                  name="state"
+                  onChange={handleChange}
+                  required
+                  value={values.state || ""}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label="Postal Code"
+                  name="postcode"
+                  onChange={handleChange}
+                  required
+                  value={values.postcode || ""}
                 />
               </Grid>
             </Grid>
