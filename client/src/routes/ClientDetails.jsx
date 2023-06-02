@@ -13,6 +13,7 @@ import {
 import { useLoaderData } from "react-router-dom"
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_CLIENT } from "../utils/queries";
+import { AddressAutocomplete } from '../components/AddressAutocomplete';
 
 
 export const ClientProfileDetails = () => {
