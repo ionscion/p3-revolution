@@ -9,18 +9,23 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import useClientContext from "../hooks/useClientContext";
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { CREATE_CLIENT } from "../utils/mutations";
 
 export default function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { createClient, getToken, createClientAuth } = useClientContext();
+  const { createClient, getToken, createClientAuth, user_id } = useClientContext();
   const [client, setClient] = useState({
     first_name: "",
     last_name: "",
     email: "",
     phone_number: "",
+    user_id: user_id,
   });
   const open = Boolean(anchorEl);
+
+  const [createClientMutation, {error}] = useMutation(CREATE_CLIENT);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,7 +50,22 @@ export default function Dashboard() {
   const handleSubmitForm = (event) => {
     event.preventDefault();
     // createClient(client);
-    createClientAuth(client);
+   
+    try {
+      createClientMutation({
+        variables: {
+          firstName: client.first_name,
+          lastName: client.last_name,
+          email: client.email,
+          phoneNumber: client.phone_number,
+          user_id: user_id,
+        },
+      });
+    }
+    catch (error) {
+      console.error(error);
+    }
+
     handleCloseModal();
   };
 

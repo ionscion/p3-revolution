@@ -12,7 +12,7 @@ const typeDefs = gql`
   type Client {
     _id: ID
     first_name: String!
-    middle_name: String!
+    middle_name: String
     last_name: String!
     email: String!
     phone_number: String!
@@ -33,9 +33,9 @@ const typeDefs = gql`
   type Mutation {
     createClient(
       first_name: String!
-      middle_name: String!
+      middle_name: String
       last_name: String!
-      email: String
+      email: String!
       phone_number: String!
       birthday: String
       user_id: String

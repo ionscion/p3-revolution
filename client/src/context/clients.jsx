@@ -133,6 +133,7 @@ function Provider({ children }) {
     // fetchClients,
     getToken,
     apiInfo,
+    user_id,
     // accessToken,
     // createClient,
     // createClientAuth,
