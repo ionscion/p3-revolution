@@ -5,6 +5,7 @@ import '@geoapify/geocoder-autocomplete/styles/minimal.css'
 dotenv.config();
 const { APIKEY } = process.env;
 
+//docs: https://apidocs.geoapify.com/#docs
  
 const AddressAutocomplete = () => {
   

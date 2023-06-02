@@ -14,6 +14,10 @@ query GetClients($userId: String!) {
     phone_number
     updated_at
     user_id
+    street
+    city
+    state
+    postcode
   }
 }
 `;
