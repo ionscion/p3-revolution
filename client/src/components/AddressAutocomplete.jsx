@@ -1,38 +1,38 @@
-import dotenv from 'dotenv';
-import React, { useState } from 'react'
-import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
-import '@geoapify/geocoder-autocomplete/styles/minimal.css'
-dotenv.config();
-const { APIKEY } = process.env;
+// import dotenv from 'dotenv';
+// import React, { useState } from 'react'
+// import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
+// import '@geoapify/geocoder-autocomplete/styles/minimal.css'
+// dotenv.config();
+// const { APIKEY } = process.env;
 
-//docs: https://apidocs.geoapify.com/#docs
+// //docs: https://apidocs.geoapify.com/#docs
  
-const AddressAutocomplete = () => {
+// const AddressAutocomplete = () => {
   
  
-  function onPlaceSelect(value) {
-    console.log(value);
-  }
+//   function onPlaceSelect(value) {
+//     console.log(value);
+//   }
  
-  function onSuggectionChange(value) {
-    console.log(value);
-  }
+//   function onSuggectionChange(value) {
+//     console.log(value);
+//   }
  
-  return <GeoapifyContext apiKey= {APIKEY}>
-      <GeoapifyGeocoderAutocomplete placeholder="Enter address here"
-        type={postcode}
-        lang={en}
-        position={position}
-        countryCodes={countryCodes}
-        limit={5}
-        value={displayValue}
-        placeSelect={onPlaceSelect}
-        suggestionsChange={onSuggectionChange}
-        />
-    </GeoapifyContext>
-}
+//   return <GeoapifyContext apiKey= {APIKEY}>
+//       <GeoapifyGeocoderAutocomplete placeholder="Enter address here"
+//         type={postcode}
+//         lang={en}
+//         position={position}
+//         countryCodes={countryCodes}
+//         limit={5}
+//         value={displayValue}
+//         placeSelect={onPlaceSelect}
+//         suggestionsChange={onSuggectionChange}
+//         />
+//     </GeoapifyContext>
+// }
  
 
 
 
-export default AddressAutocomplete;
+// export default AddressAutocomplete;

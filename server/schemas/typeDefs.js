@@ -36,6 +36,20 @@ const typeDefs = gql`
     client_id: String!
   }
 
+    input ClientInput {
+    first_name: String
+    middle_name: String
+    last_name: String
+    email: String
+    phone_number: String
+    birthday: String
+    street: String
+    city: String
+    state: String
+    postcode: Int
+    user_id: String
+    }
+
   type Query {
     me: User
     getClients(user_id: String!): [Client]
@@ -53,7 +67,7 @@ const typeDefs = gql`
       birthday: String
       user_id: String
     ): Client
-    updateClient: Client
+    updateClient(client_id: ID!, input: ClientInput): Client
     deleteClient: Client
   }
 `;

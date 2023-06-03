@@ -12,3 +12,15 @@ export const CREATE_CLIENT = gql`
   }
 `;
 
+export const UPDATE_CLIENT = gql`
+    mutation UpdateClient($id: ID!, $firstName: String!, $lastName: String!, $email: String!, $phoneNumber: String!) {
+    updateClient(_id: $id, first_name: $firstName, last_name: $lastName, email: $email, phone_number: $phoneNumber) {
+      _id
+      first_name
+      last_name
+      email
+      phone_number
+    }
+    }
+`;
+

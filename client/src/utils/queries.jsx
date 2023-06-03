@@ -54,6 +54,10 @@ query GetClientById($id: ID!) {
     user_id
     _id
     updated_at
+    street
+    city
+    state
+    postcode
   }
 }
 `;

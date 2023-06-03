@@ -13,7 +13,7 @@ import {
 import { useLoaderData } from "react-router-dom"
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_CLIENT } from "../utils/queries";
-import { AddressAutocomplete } from '../components/AddressAutocomplete';
+// import { AddressAutocomplete } from '../components/AddressAutocomplete';
 
 
 export const ClientProfileDetails = () => {
@@ -48,6 +48,7 @@ export const ClientProfileDetails = () => {
 
   useEffect(() => {
     if (data && data.getClientById) {
+      console.log(data);
       const client = data.getClientById;
       setValues((prevState) => ({
         ...prevState,
@@ -78,10 +79,15 @@ export const ClientProfileDetails = () => {
     event.preventDefault();
   }, []);
 
+  const handleSave = useCallback((event) => {
+    event.preventDefault();
+    console.log("Save details");
+  }, []);
+
   return (
     <form autoComplete="off" noValidate onSubmit={handleSubmit}>
       <Card>
-        <CardHeader subheader="The information can be edited" title="General" />
+        <CardHeader subheader="This information can be edited" title="General" />
         <CardContent sx={{ pt: 0 }}>
           <Box sx={{ m: -1.5 }}>
             <Grid container spacing={3}>
@@ -211,7 +217,7 @@ export const ClientProfileDetails = () => {
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: "flex-end" }}>
-          <Button variant="contained">Save details</Button>
+          <Button variant="contained" onClick={handleSave}>Save details</Button>
         </CardActions>
       </Card>
     </form>
