@@ -18,10 +18,12 @@ const resolvers = {
       return await Client.create(args);
     },
     updateClient: async (parent, { client_id, input }) => {
-      return await Client.findOneAndUpdate({ _id: client_id }, input, {
-        new: true,
-      });
-    },
+        const updatedClient = await Client.findByIdAndUpdate({ _id: client_id }, input, {
+          new: true,
+        });
+        return updatedClient;
+      },
+      
   },
 };
 

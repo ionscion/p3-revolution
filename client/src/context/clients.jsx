@@ -46,7 +46,7 @@ function Provider({ children }) {
     }
   }, [user_id, fetchClientsQuery]);
 
-// TODO - need to update REST API to gql - specifically the mutation for creating clients on Client Details component
+
 
 //old works with no auth
 

@@ -10,14 +10,15 @@ import {
   TextField,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
-import { useLoaderData } from "react-router-dom"
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useLoaderData } from "react-router-dom";
+import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { GET_CLIENT } from "../utils/queries";
+import { UPDATE_CLIENT } from "../utils/mutations";
+
 // import { AddressAutocomplete } from '../components/AddressAutocomplete';
 
-
 export const ClientProfileDetails = () => {
-  const {id} = useLoaderData();
+  const { id } = useLoaderData();
   const [values, setValues] = useState({
     firstName: "",
     lastName: "",
@@ -32,8 +33,8 @@ export const ClientProfileDetails = () => {
     state: "",
     postcode: "",
   });
-     // TODO - need to update REST API to gql using the GET_CLIENT query
-  
+
+  const [updateClientMutation, { err }] = useMutation(UPDATE_CLIENT);
 
   const [fetchClient, { loading, error, data }] = useLazyQuery(GET_CLIENT, {
     variables: { id: id },
@@ -63,31 +64,79 @@ export const ClientProfileDetails = () => {
         street: client.street ? client.street : "",
         city: client.city ? client.city : "",
         state: client.state ? client.state : "",
-        postcode: client.postcode ? client.postcode : "",
+        postcode: parseInt(client.postcode) ? parseInt(client.postcode) : "",
       }));
     }
   }, [data]);
 
+  // const handleChange = useCallback((event) => {
+  //   setValues((prevState) => ({
+  //     ...prevState,
+  //     [event.target.name]: event.target.value,
+  //   }));
+  // }, []);
+
   const handleChange = useCallback((event) => {
+    const { name, value } = event.target;
     setValues((prevState) => ({
       ...prevState,
-      [event.target.name]: event.target.value,
+      [name]: value,
     }));
   }, []);
 
-  const handleSubmit = useCallback((event) => {
-    event.preventDefault();
-  }, []);
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
 
-  const handleSave = useCallback((event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Save details");
-  }, []);
+    console.log(values);
+    try {
+      const response = await updateClientMutation({
+        variables: {
+          clientId: id,
+          input: {
+            first_name: values.firstName,
+            last_name: values.lastName,
+            email: values.email,
+            phone_number: values.phone,
+            birthday: values.dob,
+            street: values.street,
+            city: values.city,
+            state: values.state,
+            postcode: parseInt(values.postcode),
+          },
+        },
+      });
+      console.log(response.data); // Check the updated client data in the console
+      // setValues((prevState) => ({
+      //   ...prevState,
+      //   firstName: "",
+      //   lastName: "",
+      //   email: "",
+      //   phone: "",
+      //   dob: "",
+      //   gender: "",
+      //   citizenship: "",
+      //   marital: "",
+      //   street: "",
+      //   city: "",
+      //   state: "",
+      //   postcode: "",
+      // }));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   return (
     <form autoComplete="off" noValidate onSubmit={handleSubmit}>
       <Card>
-        <CardHeader subheader="This information can be edited" title="General" />
+        <CardHeader
+          subheader="This information can be edited"
+          title="General"
+        />
         <CardContent sx={{ pt: 0 }}>
           <Box sx={{ m: -1.5 }}>
             <Grid container spacing={3}>
@@ -217,7 +266,7 @@ export const ClientProfileDetails = () => {
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: "flex-end" }}>
-          <Button variant="contained" onClick={handleSave}>Save details</Button>
+          <Button variant="contained" onClick={handleSubmit}>Save details</Button>
         </CardActions>
       </Card>
     </form>

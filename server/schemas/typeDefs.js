@@ -11,11 +11,11 @@ const typeDefs = gql`
 
   type Client {
     _id: ID
-    first_name: String!
+    first_name: String
     middle_name: String
-    last_name: String!
-    email: String!
-    phone_number: String!
+    last_name: String
+    email: String
+    phone_number: String
     birthday: String
     street: String
     city: String
