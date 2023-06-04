@@ -1,4 +1,4 @@
-const { Client } = require("../models");
+const { Client, Beneficiary } = require("../models");
 
 const resolvers = {
   Query: {
@@ -18,12 +18,24 @@ const resolvers = {
       return await Client.create(args);
     },
     updateClient: async (parent, { client_id, input }) => {
-        const updatedClient = await Client.findByIdAndUpdate({ _id: client_id }, input, {
+      const updatedClient = await Client.findByIdAndUpdate(
+        { _id: client_id },
+        input,
+        {
           new: true,
-        });
-        return updatedClient;
-      },
-      
+        }
+      );
+      return updatedClient;
+    },
+    createBeneficiary: async (parent, args) => {
+      const newBeneficiary = await Beneficiary.create(args);
+      const updatedClient = await Client.findByIdAndUpdate(
+        args.clientId, // Use clientId to find the client by its ObjectId
+        { $push: { beneficiaries: newBeneficiary._id } },
+        { new: true }
+      );
+      return newBeneficiary;
+    },
   },
 };
 

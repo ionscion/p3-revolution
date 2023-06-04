@@ -19,7 +19,7 @@ const beneficiarySchema = new Schema(
       type: Number,
       required: true,
     },
-    birthday: Date,
+    birthday: String,
     is_active: {
       type: Boolean,
       default: true,
@@ -38,12 +38,16 @@ const beneficiarySchema = new Schema(
     },
     user_id: {
       type: String,
-      required: true,
+    },
+    client: {
+      type: Schema.Types.ObjectId,
+      ref: "Client",
     },
   },
   {
     toJSON: {
       getters: true,
+      virtuals: true,
     },
   }
 );

@@ -40,7 +40,8 @@ const typeDefs = gql`
     created_at: String
     updated_at: String
     relationship: String
-    user_id: String!
+    user_id: String
+    client: Client
   }
 
     input ClientInput {
@@ -76,6 +77,16 @@ const typeDefs = gql`
     ): Client
     updateClient(client_id: ID!, input: ClientInput): Client
     deleteClient: Client
+    createBeneficiary(
+      first_name: String!
+      middle_name: String
+      last_name: String!
+      email: String!
+      phone_number: String!
+      birthday: String
+      relationship: String!
+      clientId: ID! 
+    ): Beneficiary
   }
 `;
 

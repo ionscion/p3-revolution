@@ -19,7 +19,7 @@ const clientSchema = new Schema(
       type: Number,
       required: true,
     },
-    birthday: Date,
+    birthday: String,
     is_active: {
       type: Boolean,
       default: true,
