@@ -1,8 +1,9 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect,  } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import jwt_decode from "jwt-decode";
 import { useQuery, useLazyQuery} from "@apollo/client";
 import { GET_CLIENTNOAUTH, GET_CLIENTS } from "../utils/queries";
+
 
 const ClientContext = createContext();
 
@@ -12,6 +13,7 @@ function Provider({ children }) {
   const [accessToken, setAccessToken] = useState(null);
   const [clientData, setClientData] = useState(null);
   const [user_id, setUser_id] = useState(""); // Declare user_id here
+  
 
 
   // const { loading, data } = useQuery(GET_CLIENTNOAUTH);
@@ -46,7 +48,11 @@ function Provider({ children }) {
     }
   }, [user_id, fetchClientsQuery]);
 
-
+  // useEffect(() => {
+  //   if (user_id && pathname === "/clients") { // Replace "/your-route" with your actual route path
+  //     fetchClientsQuery({ variables: { userId: user_id } });
+  //   }
+  // }, [user_id, fetchClientsQuery, pathname]);
 
 //old works with no auth
 

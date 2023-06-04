@@ -11,6 +11,8 @@ import useClientContext from "../hooks/useClientContext";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { CREATE_CLIENT } from "../utils/mutations";
+import IconButton from "./IconButton"
+
 
 export default function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -69,6 +71,10 @@ export default function Dashboard() {
     handleCloseModal();
   };
 
+  const handleRefresh = () => {
+    window.location.reload();
+  }
+
   return (
     <div style={{ margin: 10 }}>
       <Button
@@ -83,6 +89,7 @@ export default function Dashboard() {
       >
         Dashboard
       </Button>
+     
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -171,6 +178,7 @@ export default function Dashboard() {
           </form>
         </Box>
       </Modal>
+      <IconButton onClick={handleRefresh}/>
     </div>
   );
 }
