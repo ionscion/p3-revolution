@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const clientSchema = new Schema(
+const beneficiarySchema = new Schema(
   {
     first_name: {
       type: String,
@@ -32,44 +32,21 @@ const clientSchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    relationship: {
+      type: String,
+      required: true,
+    },
     user_id: {
       type: String,
       required: true,
     },
-    street: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    city: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    state: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    postcode: {
-      type: Number,
-      required: false,
-      default: null,
-    },
-    beneficiaries: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Beneficiary",
-      },
-    ],
   },
   {
     toJSON: {
-      virtuals: true,
+      getters: true,
     },
   }
 );
 
-const Client = model("Client", clientSchema);
-
-module.exports = Client;
+const Beneficiary = model("Beneficary", beneficiarySchema);
+module.exports = Beneficiary;

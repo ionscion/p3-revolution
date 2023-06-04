@@ -25,15 +25,22 @@ const typeDefs = gql`
     created_at: String
     updated_at: String
     user_id: String!
+    beneficiaries: [Beneficiary]
   }
 
-  type Address {
+  type Beneficiary {
     _id: ID
-    street: String!
-    city: String!
-    state: String!
-    postcode: Int!
-    client_id: String!
+    first_name: String
+    middle_name: String
+    last_name: String
+    email: String
+    phone_number: String
+    birthday: String
+    is_active: Boolean
+    created_at: String
+    updated_at: String
+    relationship: String
+    user_id: String!
   }
 
     input ClientInput {
