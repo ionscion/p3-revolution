@@ -14,10 +14,53 @@ import { useLoaderData } from "react-router-dom";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { GET_CLIENT } from "../utils/queries";
 import { UPDATE_CLIENT } from "../utils/mutations";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
 
 // import { AddressAutocomplete } from '../components/AddressAutocomplete';
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
 export const ClientProfileDetails = () => {
+  const [tabValue, setTabValue] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
   const { id } = useLoaderData();
   const [values, setValues] = useState({
     firstName: "",
@@ -69,13 +112,6 @@ export const ClientProfileDetails = () => {
     }
   }, [data]);
 
-  // const handleChange = useCallback((event) => {
-  //   setValues((prevState) => ({
-  //     ...prevState,
-  //     [event.target.name]: event.target.value,
-  //   }));
-  // }, []);
-
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;
     setValues((prevState) => ({
@@ -108,167 +144,173 @@ export const ClientProfileDetails = () => {
           },
         },
       });
-      console.log(response.data); // Check the updated client data in the console
-      // setValues((prevState) => ({
-      //   ...prevState,
-      //   firstName: "",
-      //   lastName: "",
-      //   email: "",
-      //   phone: "",
-      //   dob: "",
-      //   gender: "",
-      //   citizenship: "",
-      //   marital: "",
-      //   street: "",
-      //   city: "",
-      //   state: "",
-      //   postcode: "",
-      // }));
+      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-
   return (
-    <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-      <Card>
-        <CardHeader
-          subheader="This information can be edited"
-          title="General"
-        />
-        <CardContent sx={{ pt: 0 }}>
-          <Box sx={{ m: -1.5 }}>
-            <Grid container spacing={3}>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  helperText="Please specify the first name"
-                  label="First name"
-                  name="firstName"
-                  onChange={handleChange}
-                  required
-                  value={values.firstName || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Last name"
-                  name="lastName"
-                  onChange={handleChange}
-                  required
-                  value={values.lastName || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Email Address"
-                  name="email"
-                  onChange={handleChange}
-                  required
-                  value={values.email || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Phone Number"
-                  name="phone"
-                  onChange={handleChange}
-                  type="number"
-                  value={values.phone || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Date of Birth"
-                  name="dob"
-                  onChange={handleChange}
-                  required
-                  value={values.dob || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Gender"
-                  name="gender"
-                  onChange={handleChange}
-                  required
-                  value={values.gender || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Citizenship"
-                  name="citizenship"
-                  onChange={handleChange}
-                  required
-                  value={values.citizenship || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Marital Status"
-                  name="marital"
-                  onChange={handleChange}
-                  required
-                  value={values.marital || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Address"
-                  name="street"
-                  onChange={handleChange}
-                  required
-                  value={values.street || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="City"
-                  name="city"
-                  onChange={handleChange}
-                  required
-                  value={values.city || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="State"
-                  name="state"
-                  onChange={handleChange}
-                  required
-                  value={values.state || ""}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Postal Code"
-                  name="postcode"
-                  onChange={handleChange}
-                  required
-                  value={values.postcode || ""}
-                />
-              </Grid>
-            </Grid>
-          </Box>
-        </CardContent>
-        <Divider />
-        <CardActions sx={{ justifyContent: "flex-end" }}>
-          <Button variant="contained" onClick={handleSubmit}>Save details</Button>
-        </CardActions>
-      </Card>
-    </form>
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          aria-label="basic tabs example"
+        >
+          <Tab label="General Information" {...a11yProps(0)} />
+          <Tab label="Beneficiaries" {...a11yProps(1)} />
+          <Tab label="Financial" {...a11yProps(2)} />
+        </Tabs>
+      </Box>
+      <TabPanel value={tabValue} index={0}>
+        <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+          <Card>
+            <CardHeader
+              subheader="This information can be edited"
+            />
+            <CardContent sx={{ pt: 0 }}>
+              <Box sx={{ m: -1.5 }}>
+                <Grid container spacing={3}>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      helperText="Please specify the first name"
+                      label="First name"
+                      name="firstName"
+                      onChange={handleChange}
+                      required
+                      value={values.firstName || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="Last name"
+                      name="lastName"
+                      onChange={handleChange}
+                      required
+                      value={values.lastName || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="Email Address"
+                      name="email"
+                      onChange={handleChange}
+                      required
+                      value={values.email || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="Phone Number"
+                      name="phone"
+                      onChange={handleChange}
+                      type="number"
+                      value={values.phone || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="Date of Birth"
+                      name="dob"
+                      onChange={handleChange}
+                      required
+                      value={values.dob || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="Gender"
+                      name="gender"
+                      onChange={handleChange}
+                      required
+                      value={values.gender || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="Citizenship"
+                      name="citizenship"
+                      onChange={handleChange}
+                      required
+                      value={values.citizenship || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="Marital Status"
+                      name="marital"
+                      onChange={handleChange}
+                      required
+                      value={values.marital || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="Address"
+                      name="street"
+                      onChange={handleChange}
+                      required
+                      value={values.street || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="City"
+                      name="city"
+                      onChange={handleChange}
+                      required
+                      value={values.city || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="State"
+                      name="state"
+                      onChange={handleChange}
+                      required
+                      value={values.state || ""}
+                    />
+                  </Grid>
+                  <Grid xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      label="Postal Code"
+                      name="postcode"
+                      onChange={handleChange}
+                      required
+                      value={values.postcode || ""}
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+            </CardContent>
+            <Divider />
+            <CardActions sx={{ justifyContent: "flex-end" }}>
+              <Button variant="contained" onClick={handleSubmit}>
+                Save details
+              </Button>
+            </CardActions>
+          </Card>
+        </form>
+      </TabPanel>
+
+      {/* Second Tab */}
+      <TabPanel value={tabValue} index={1}>{/* Content for the second tab */}</TabPanel>
+
+      {/* Third Tab */}
+      <TabPanel value={tabValue} index={2}>{/* Content for the third tab */}</TabPanel>
+    </Box>
   );
 };
