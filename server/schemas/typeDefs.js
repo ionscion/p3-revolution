@@ -41,6 +41,7 @@ const typeDefs = gql`
     updated_at: String
     relationship: String
     user_id: String
+    percentage: Int
     client: Client
   }
 
@@ -85,6 +86,7 @@ const typeDefs = gql`
       phone_number: String!
       birthday: String
       relationship: String!
+      percentage: Int!
       clientId: ID! 
     ): Beneficiary
   }

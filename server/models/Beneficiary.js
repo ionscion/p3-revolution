@@ -36,6 +36,10 @@ const beneficiarySchema = new Schema(
       type: String,
       required: true,
     },
+    percentage: {
+      type: Number,
+      required: true,
+    },
     user_id: {
       type: String,
     },
@@ -52,5 +56,5 @@ const beneficiarySchema = new Schema(
   }
 );
 
-const Beneficiary = model("Beneficary", beneficiarySchema);
+const Beneficiary = model("Beneficiary", beneficiarySchema);
 module.exports = Beneficiary;

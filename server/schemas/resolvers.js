@@ -3,14 +3,14 @@ const { Client, Beneficiary } = require("../models");
 const resolvers = {
   Query: {
     getClients: async (parent, { user_id }) => {
-      return await Client.find({ user_id });
+      return await Client.find({ user_id }).populate("beneficiaries");
     },
     getClientNoAuth: async (parent, args) => {
       return await Client.find({});
     },
     getClientById: async (parent, { _id }) => {
       console.log("something hit the route");
-      return await Client.findById(_id);
+      return await Client.findById(_id).populate("beneficiaries");
     },
   },
   Mutation: {
@@ -34,7 +34,7 @@ const resolvers = {
         { $push: { beneficiaries: newBeneficiary._id } },
         { new: true }
       );
-      return newBeneficiary;
+      return updatedClient;
     },
   },
 };
