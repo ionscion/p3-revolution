@@ -9,6 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LoginButton from "./login";
 import LogoutButton from "./logout";
 import { useAuth0 } from "@auth0/auth0-react";
+import '../styles/style.css';
 
 export default function ButtonAppBar() {
     const { isAuthenticated} = useAuth0();
@@ -25,11 +26,11 @@ export default function ButtonAppBar() {
           >
             {/* <MenuIcon /> */}
           </IconButton>
-          <Typography variant="h2" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h2" component="div" sx={{ flexGrow: 1 }} style={{fontFamily: "Comfortaa", fontSize: "3em", padding:"10px"}}>
             Legacy Architects
           </Typography>
-          {!isAuthenticated && <LoginButton color="inherit"/>}
-          {isAuthenticated && <LogoutButton color="inherit"/>}
+          {!isAuthenticated && <LoginButton/>}
+          {isAuthenticated && <LogoutButton/>}
         </Toolbar>
       </AppBar>
     </Box>

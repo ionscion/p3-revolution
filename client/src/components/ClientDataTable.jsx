@@ -3,20 +3,21 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
 import { useOutletContext, Link, useNavigate } from "react-router-dom";
 
+
 const columns = [
   // { field: "id", headerName: "Id", width: 200 },
-  { field: "firstName", headerName: "First name", width: 130 },
-  { field: "middleName", headerName: "Middle name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
-  { field: "email", headerName: "Email", width: 150 },
-  { field: "phoneNumber", headerName: "Phone#", width: 150 },
+  { field: "firstName", headerName: "First Name", width: 130 },
+  { field: "middleName", headerName: "Middle Name", width: 130 },
+  { field: "lastName", headerName: "Last Name", width: 130 },
+  { field: "email", headerName: "E-Mail", width: 150 },
+  { field: "phoneNumber", headerName: "Phone #", width: 150 },
   {
     field: "isActive",
     headerName: "Active/Inactive",
     width: 150,
     valueGetter: (params) => (params.row.isActive ? "Active" : "Inactive"),
   },
-  { field: "user_id", headerName: "Lawyer Id", width: 200 },
+  { field: "user_id", headerName: "Lawyer ID", width: 200 },
 ];
 
 export default function DataTable() {
@@ -48,7 +49,7 @@ export default function DataTable() {
 
   return (
     <div style={{ height: 500, width: "100%" }}>
-      <Typography variant="h4">Client List</Typography>
+      <Typography variant="h4" style={{color:'#373737', fontFamily:"Tahoma", fontSize: "32px", margin: "10px"}}>Client List</Typography>
       <DataGrid
         onRowClick={handleRowClick}
         onCellClick={handleRowClick}

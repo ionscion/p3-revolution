@@ -13,7 +13,7 @@ import {
 import { useLoaderData } from "react-router-dom"
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_CLIENT } from "../utils/queries";
-import { AddressAutocomplete } from '../components/AddressAutocomplete';
+// import { AddressAutocomplete } from '../components/AddressAutocomplete';
 
 
 export const ClientProfileDetails = () => {
@@ -81,15 +81,14 @@ export const ClientProfileDetails = () => {
   return (
     <form autoComplete="off" noValidate onSubmit={handleSubmit}>
       <Card>
-        <CardHeader subheader="The information can be edited" title="General" />
-        <CardContent sx={{ pt: 0 }}>
+        <CardHeader subheader="This information can be edited" title="General" style={{marginBottom: '12px'}}/>
+        <CardContent sx={{ pt: 0 }} style={{marginBottom: '5px'}}>
           <Box sx={{ m: -1.5 }}>
             <Grid container spacing={3}>
               <Grid xs={12} md={6}>
                 <TextField
                   fullWidth
-                  helperText="Please specify the first name"
-                  label="First name"
+                  label="First Name"
                   name="firstName"
                   onChange={handleChange}
                   required
@@ -99,7 +98,7 @@ export const ClientProfileDetails = () => {
               <Grid xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label="Last name"
+                  label="Last Name"
                   name="lastName"
                   onChange={handleChange}
                   required
@@ -109,7 +108,7 @@ export const ClientProfileDetails = () => {
               <Grid xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label="Email Address"
+                  label="E-Mail Address"
                   name="email"
                   onChange={handleChange}
                   required

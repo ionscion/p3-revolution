@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { CREATE_CLIENT } from "../utils/mutations";
 
+
 export default function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -80,6 +81,7 @@ export default function Dashboard() {
         variant="outlined"
         size="large"
         color="secondary"
+        style={{ marginTop: "10px" }}
       >
         Dashboard
       </Button>
@@ -100,10 +102,9 @@ export default function Dashboard() {
             All Contacts
           </Link>
         </MenuItem>
-        <MenuItem onClick={handleOpenModal}>New Contact</MenuItem>
-
+        <MenuItem style={{ fontFamily: "Comfortaa"}} onClick={handleOpenModal}>New Contact</MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <Link to="/" style={{ textDecoration: "none", color: "inherit"}}>
             Home
           </Link>
         </MenuItem>
@@ -121,7 +122,7 @@ export default function Dashboard() {
             minWidth: 400,
           }}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography style={{fontFamily: "Comfortaa"}} variant="h6" gutterBottom>
             New Contact
           </Typography>
           <form onSubmit={handleSubmitForm}>
@@ -164,7 +165,7 @@ export default function Dashboard() {
                 value={client.phone_number}
                 onChange={handleInputChange}
               />
-              <Button type="submit" variant="contained">
+              <Button style={{marginTop:"15px"}} type="submit" variant="contained">
                 Save
               </Button>
             </Box>
