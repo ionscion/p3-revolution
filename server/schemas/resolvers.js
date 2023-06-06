@@ -12,10 +12,10 @@ const resolvers = {
       console.log("something hit the route");
       return await Client.findById(_id).populate("beneficiaries");
     },
-    getBeneficiariesById: async (parent, {_id }) => {
-      return await Client.findById(_id).populate("beneficiaries");
+    getBeneficiariesById: async (parent, { Client_id }) => {
+      const client = await Client.findById(Client_id).populate("beneficiaries");
+      return client.beneficiaries;
     },
-
   },
   Mutation: {
     createClient: async (parent, args) => {
