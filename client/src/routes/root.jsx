@@ -6,6 +6,7 @@ import ButtonAppBar from "../components/Appbar";
 import { Outlet } from "react-router-dom";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 import { Switch, FormControlLabel } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 
 
 
@@ -34,7 +35,7 @@ function Root() {
     palette: {
       mode: darkMode ? "dark" : "light",
       background: {
-        default: "#424242", // Set the default background color for dark mode
+        default: darkMode ? "#424242" : "#FFFFFF", // Set the default background color based on the dark mode
       },
       primary: {
         main: "#0B746C",
@@ -80,6 +81,7 @@ function Root() {
   return (
     <>
       <ThemeProvider theme={theme}>
+      <CssBaseline />
         <ButtonAppBar />
         <FormControlLabel
           control={<Switch checked={darkMode} onChange={toggleDarkMode} />}
