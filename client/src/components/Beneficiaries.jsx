@@ -9,7 +9,7 @@ import {
   Divider,
   TextField,
   Unstable_Grid2 as Grid,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
@@ -86,11 +86,24 @@ export default function Beneficiaries() {
     event.preventDefault();
   };
 
+  const handleAddBeneficiary = () => {
+    console.log("Add beneficiary");
+  };
+
   return (
     <Card>
-      <CardHeader subheader="This information can be edited" />
+      <CardHeader
+        subheader="This information can be edited"
+        action={
+          <Button variant="contained" onClick={handleAddBeneficiary}>
+            Add Beneficiary
+          </Button>
+        }
+      />
       <CardContent sx={{ pt: 0 }}>
-        {data && data.getBeneficiariesById && data.getBeneficiariesById.length > 0 ? (
+        {data &&
+        data.getBeneficiariesById &&
+        data.getBeneficiariesById.length > 0 ? (
           data.getBeneficiariesById.map((beneficiary) => (
             <Box key={beneficiary._id} sx={{ mb: 2 }}>
               <Card>
@@ -98,7 +111,7 @@ export default function Beneficiaries() {
                 <CardContent sx={{ pt: 0 }}>
                   <Box sx={{ m: -1.5 }}>
                     <Grid container spacing={3}>
-                      <Grid item xs={12} md={6}>
+                      <Grid  xs={12} md={6}>
                         <TextField
                           fullWidth
                           helperText="Please specify the first name"
@@ -109,7 +122,7 @@ export default function Beneficiaries() {
                           value={beneficiary.first_name || ""}
                         />
                       </Grid>
-                      <Grid item xs={12} md={6}>
+                      <Grid  xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Middle Name"
@@ -119,7 +132,7 @@ export default function Beneficiaries() {
                           value={beneficiary.middle_name || ""}
                         />
                       </Grid>
-                      <Grid item xs={12} md={6}>
+                      <Grid  xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Last Name"
@@ -129,7 +142,7 @@ export default function Beneficiaries() {
                           value={beneficiary.last_name || ""}
                         />
                       </Grid>
-                      <Grid item xs={12} md={6}>
+                      <Grid  xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Email"
@@ -139,7 +152,7 @@ export default function Beneficiaries() {
                           value={beneficiary.email || ""}
                         />
                       </Grid>
-                      <Grid item xs={12} md={6}>
+                      <Grid  xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Phone Number"
@@ -149,7 +162,7 @@ export default function Beneficiaries() {
                           value={beneficiary.phone_number || ""}
                         />
                       </Grid>
-                      <Grid item xs={12} md={6}>
+                      <Grid  xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Date of Birth"
@@ -159,7 +172,7 @@ export default function Beneficiaries() {
                           value={beneficiary.birthday || ""}
                         />
                       </Grid>
-                      <Grid item xs={12} md={6}>
+                      <Grid  xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Relatives"
@@ -169,7 +182,7 @@ export default function Beneficiaries() {
                           value={beneficiary.relationship || ""}
                         />
                       </Grid>
-                      <Grid item xs={12} md={6}>
+                      <Grid  xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Percentage"
@@ -197,6 +210,4 @@ export default function Beneficiaries() {
       </CardContent>
     </Card>
   );
-  
-
 }
