@@ -10,6 +10,7 @@ import {
   TextField,
   Unstable_Grid2 as Grid,
   Typography,
+  Modal
 } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
@@ -17,12 +18,23 @@ import { GET_BENEFICIARIES } from "../utils/queries";
 
 export default function Beneficiaries() {
   const { id } = useLoaderData();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [fetchBeneficiariesQuery, { loading, error, data }] = useLazyQuery(
     GET_BENEFICIARIES,
     {
       variables: { clientId: id },
     }
   );
+
+  const [newBene, setNewBene] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone_number: "",
+    relationship: "",
+    percentage: "",
+    user_id: id,
+  });
 
   useEffect(() => {
     if (id) {
@@ -82,6 +94,10 @@ export default function Beneficiaries() {
     }));
   }, []);
 
+  const handleInputChange = (event) => {
+    setClient({ ...client, [event.target.name]: event.target.value });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
   };
@@ -90,12 +106,21 @@ export default function Beneficiaries() {
     console.log("Add beneficiary");
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    handleClose();
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <Card>
       <CardHeader
         subheader="This information can be edited"
         action={
-          <Button variant="contained" onClick={handleAddBeneficiary}>
+          <Button variant="contained" onClick={handleOpenModal}>
             Add Beneficiary
           </Button>
         }
@@ -111,7 +136,7 @@ export default function Beneficiaries() {
                 <CardContent sx={{ pt: 0 }}>
                   <Box sx={{ m: -1.5 }}>
                     <Grid container spacing={3}>
-                      <Grid  xs={12} md={6}>
+                      <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
                           helperText="Please specify the first name"
@@ -122,7 +147,7 @@ export default function Beneficiaries() {
                           value={beneficiary.first_name || ""}
                         />
                       </Grid>
-                      <Grid  xs={12} md={6}>
+                      <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Middle Name"
@@ -132,7 +157,7 @@ export default function Beneficiaries() {
                           value={beneficiary.middle_name || ""}
                         />
                       </Grid>
-                      <Grid  xs={12} md={6}>
+                      <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Last Name"
@@ -142,7 +167,7 @@ export default function Beneficiaries() {
                           value={beneficiary.last_name || ""}
                         />
                       </Grid>
-                      <Grid  xs={12} md={6}>
+                      <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Email"
@@ -152,7 +177,7 @@ export default function Beneficiaries() {
                           value={beneficiary.email || ""}
                         />
                       </Grid>
-                      <Grid  xs={12} md={6}>
+                      <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Phone Number"
@@ -162,7 +187,7 @@ export default function Beneficiaries() {
                           value={beneficiary.phone_number || ""}
                         />
                       </Grid>
-                      <Grid  xs={12} md={6}>
+                      <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Date of Birth"
@@ -172,7 +197,7 @@ export default function Beneficiaries() {
                           value={beneficiary.birthday || ""}
                         />
                       </Grid>
-                      <Grid  xs={12} md={6}>
+                      <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Relatives"
@@ -182,7 +207,7 @@ export default function Beneficiaries() {
                           value={beneficiary.relationship || ""}
                         />
                       </Grid>
-                      <Grid  xs={12} md={6}>
+                      <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
                           label="Percentage"
@@ -202,6 +227,89 @@ export default function Beneficiaries() {
                   </Button>
                 </CardActions>
               </Card>
+              <Modal open={isModalOpen} onClose={handleCloseModal}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "background.paper",
+                    boxShadow: 24,
+                    p: 4,
+                    minWidth: 400,
+                  }}
+                >
+                  <Typography variant="h6" gutterBottom>
+                    New Beneficiary
+                  </Typography>
+                  <form onSubmit={handleAddBeneficiary}>
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <TextField
+                        required
+                        label="First Name"
+                        variant="outlined"
+                        margin="normal"
+                        name="first_name"
+                        value={newBene.first_name}
+                        onChange={handleInputChange}
+                      />
+                      <TextField
+                        required
+                        label="Last Name"
+                        variant="outlined"
+                        margin="normal"
+                        name="last_name"
+                        value={newBene.last_name}
+                        onChange={handleInputChange}
+                      />
+                      <TextField
+                        required
+                        label="Email"
+                        type="email"
+                        variant="outlined"
+                        margin="normal"
+                        name="email"
+                        value={newBene.email}
+                        onChange={handleInputChange}
+                      />
+                      <TextField
+                        required
+                        label="Phone Number"
+                        type="input"
+                        variant="outlined"
+                        margin="normal"
+                        name="phone_number"
+                        value={newBene.phone_number}
+                        onChange={handleInputChange}
+                      />
+                         <TextField
+                        required
+                        label="Relationship"
+                        type="input"
+                        variant="outlined"
+                        margin="normal"
+                        name="relationship"
+                        value={newBene.relationship}
+                        onChange={handleInputChange}
+                      />
+                         <TextField
+                        required
+                        label="Percentage"
+                        type="input"
+                        variant="outlined"
+                        margin="normal"
+                        name="percentage"
+                        value={newBene.percentage}
+                        onChange={handleInputChange}
+                      />
+                      <Button type="submit" variant="contained">
+                        Save
+                      </Button>
+                    </Box>
+                  </form>
+                </Box>
+              </Modal>
             </Box>
           ))
         ) : (
