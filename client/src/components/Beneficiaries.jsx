@@ -10,11 +10,12 @@ import {
   TextField,
   Unstable_Grid2 as Grid,
   Typography,
-  Modal
+  Modal,
 } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { GET_BENEFICIARIES } from "../utils/queries";
+import { CREATE_BENEFICIARY } from "../utils/mutations";
 
 export default function Beneficiaries() {
   const { id } = useLoaderData();
@@ -25,7 +26,6 @@ export default function Beneficiaries() {
       variables: { clientId: id },
     }
   );
-
   const [newBene, setNewBene] = useState({
     first_name: "",
     last_name: "",
@@ -36,11 +36,19 @@ export default function Beneficiaries() {
     user_id: id,
   });
 
-  useEffect(() => {
-    if (id) {
-      fetchBeneficiariesQuery();
-    }
-  }, [id]);
+  const [createBeneficiary] = useMutation(CREATE_BENEFICIARY, {
+    variables: {
+      firstName: newBene.first_name,
+      lastName: newBene.last_name,
+      email: newBene.email,
+      phoneNumber: newBene.phone_number,
+      relationship: newBene.relationship,
+      percentage: newBene.percentage,
+      clientId: id,
+    },
+  });
+
+
 
   const [values, setValues] = useState({
     firstName: "",
@@ -52,6 +60,12 @@ export default function Beneficiaries() {
     relationship: "",
     percentage: "",
   });
+
+  useEffect(() => {
+    if (id) {
+      fetchBeneficiariesQuery();
+    }
+  }, [id]);
 
   useEffect(() => {
     if (
@@ -95,7 +109,7 @@ export default function Beneficiaries() {
   }, []);
 
   const handleInputChange = (event) => {
-    setClient({ ...client, [event.target.name]: event.target.value });
+    setNewBene({ ...newBene, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = async (event) => {
@@ -283,7 +297,7 @@ export default function Beneficiaries() {
                         value={newBene.phone_number}
                         onChange={handleInputChange}
                       />
-                         <TextField
+                      <TextField
                         required
                         label="Relationship"
                         type="input"
@@ -293,7 +307,7 @@ export default function Beneficiaries() {
                         value={newBene.relationship}
                         onChange={handleInputChange}
                       />
-                         <TextField
+                      <TextField
                         required
                         label="Percentage"
                         type="input"

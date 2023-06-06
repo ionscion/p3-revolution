@@ -39,7 +39,7 @@ const resolvers = {
         { $push: { beneficiaries: newBeneficiary._id } },
         { new: true }
       );
-      return updatedClient;
+      return newBeneficiary;
     },
   },
 };
