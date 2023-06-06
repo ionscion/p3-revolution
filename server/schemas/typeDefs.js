@@ -64,6 +64,7 @@ const typeDefs = gql`
     getClients(user_id: String!): [Client]
     getClientNoAuth: [Client]
     getClientById(_id: ID!): Client
+    getBeneficiariesById(Client_id: ID!): [Beneficiary]
   }
 
   type Mutation {

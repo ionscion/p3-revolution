@@ -18,6 +18,7 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
+import Beneficiaries from "../components/Beneficiaries";
 
 // import { AddressAutocomplete } from '../components/AddressAutocomplete';
 
@@ -304,7 +305,7 @@ export const ClientProfileDetails = () => {
 
       {/* Second Tab */}
       <TabPanel value={tabValue} index={1}>
-        {/* Content for the second tab */}
+     <Beneficiaries />
       </TabPanel>
 
       {/* Third Tab */}
