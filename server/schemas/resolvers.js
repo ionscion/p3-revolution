@@ -12,7 +12,7 @@ const resolvers = {
       console.log("something hit the route");
       return await Client.findById(_id).populate("beneficiaries");
     },
-    getBeneficiariesById: async (parent, {_id }) => {
+    getBeneficiariesById: async (parent, {Client_id }) => {
       return await Client.findById(_id).populate("beneficiaries");
     },
 
