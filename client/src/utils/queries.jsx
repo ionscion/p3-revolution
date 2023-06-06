@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client";
 
+//Client Data
+
 export const GET_CLIENTS = gql`
 query GetClients($userId: String!) {
   getClients(user_id: $userId) {
