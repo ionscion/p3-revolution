@@ -43,7 +43,7 @@ export default function Beneficiaries() {
       email: newBene.email,
       phoneNumber: newBene.phone_number,
       relationship: newBene.relationship,
-      percentage: newBene.percentage,
+      percentage: parseInt(newBene.percentage),
       clientId: id,
     },
   });
@@ -116,13 +116,14 @@ export default function Beneficiaries() {
     event.preventDefault();
   };
 
-  const handleAddBeneficiary = () => {
+  const handleAddBeneficiary = (event) => {
+    event.preventDefault();
     console.log("Add beneficiary");
+    createBeneficiary();
   };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
-    handleClose();
   };
 
   const handleCloseModal = () => {
@@ -214,7 +215,7 @@ export default function Beneficiaries() {
                       <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
-                          label="Relatives"
+                          label="Relationship"
                           name="relationship"
                           onChange={handleChange}
                           required
