@@ -45,7 +45,7 @@ const typeDefs = gql`
     client: Client
   }
 
-    input ClientInput {
+  input ClientInput {
     first_name: String
     middle_name: String
     last_name: String
@@ -57,7 +57,20 @@ const typeDefs = gql`
     state: String
     postcode: Int
     user_id: String
-    }
+  }
+
+  input BeneficiaryInput {
+    first_name: String
+    middle_name: String
+    last_name: String
+    email: String
+    phone_number: String
+    birthday: String
+    relationship: String
+    percentage: Int
+    user_id: String
+    client: ID
+  }
 
   type Query {
     me: User
@@ -88,8 +101,9 @@ const typeDefs = gql`
       birthday: String
       relationship: String!
       percentage: Int!
-      clientId: ID! 
+      clientId: ID!
     ): Beneficiary
+    updateBeneficiary(beneficiary_id: ID!, input: BeneficiaryInput): Beneficiary
   }
 `;
 

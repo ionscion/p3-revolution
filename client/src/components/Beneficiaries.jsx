@@ -48,9 +48,7 @@ export default function Beneficiaries() {
     },
   });
 
-
-
-  const [values, setValues] = useState({
+  const [values, setValues] = useState([{
     firstName: "",
     middleName: "",
     lastName: "",
@@ -59,7 +57,8 @@ export default function Beneficiaries() {
     dob: "",
     relationship: "",
     percentage: "",
-  });
+    id: "",
+  }]);
 
   useEffect(() => {
     if (id) {
@@ -67,53 +66,86 @@ export default function Beneficiaries() {
     }
   }, [id]);
 
+  // useEffect(() => {
+  //   if (
+  //     data &&
+  //     data.getBeneficiariesById &&
+  //     data.getBeneficiariesById.length > 0
+  //   ) {
+  //     const [beneficiary] = data.getBeneficiariesById; // Access the first beneficiary in the array
+  //     setValues((prevState) => ({
+  //       ...prevState,
+  //       firstName: beneficiary.first_name ? beneficiary.first_name : "",
+  //       middleName: beneficiary.middle_name ? beneficiary.middle_name : "",
+  //       lastName: beneficiary.last_name ? beneficiary.last_name : "",
+  //       email: beneficiary.email ? beneficiary.email : "",
+  //       phone: beneficiary.phone_number ? beneficiary.phone_number : "",
+  //       dob: beneficiary.birthday ? beneficiary.birthday : "",
+  //       relationship: beneficiary.relationship ? beneficiary.relationship : "",
+  //       percentage: beneficiary.percentage ? beneficiary.percentage : "",
+  //     }));
+  //   } else {
+  //     // Reset the form values when no beneficiaries are present
+  //     setValues({
+  //       firstName: "",
+  //       middleName: "",
+  //       lastName: "",
+  //       email: "",
+  //       phone: "",
+  //       dob: "",
+  //       relationship: "",
+  //       percentage: "",
+  //     });
+  //   }
+  // }, [data]);
+
   useEffect(() => {
-    if (
-      data &&
-      data.getBeneficiariesById &&
-      data.getBeneficiariesById.length > 0
-    ) {
-      const beneficiary = data.getBeneficiariesById[0]; // Access the first beneficiary in the array
-      setValues((prevState) => ({
-        ...prevState,
-        firstName: beneficiary.first_name ? beneficiary.first_name : "",
-        middleName: beneficiary.middle_name ? beneficiary.middle_name : "",
-        lastName: beneficiary.last_name ? beneficiary.last_name : "",
-        email: beneficiary.email ? beneficiary.email : "",
-        phone: beneficiary.phone_number ? beneficiary.phone_number : "",
-        dob: beneficiary.birthday ? beneficiary.birthday : "",
-        relationship: beneficiary.relationship ? beneficiary.relationship : "",
-        percentage: beneficiary.percentage ? beneficiary.percentage : "",
+    if (data && data.getBeneficiariesById && data.getBeneficiariesById.length > 0) {
+      const mappedValues = data.getBeneficiariesById.map((beneficiary) => ({
+        firstName: beneficiary.first_name || "",
+        middleName: beneficiary.middle_name || "",
+        lastName: beneficiary.last_name || "",
+        email: beneficiary.email || "",
+        phone: beneficiary.phone_number || "",
+        dob: beneficiary.birthday || "",
+        relationship: beneficiary.relationship || "",
+        percentage: beneficiary.percentage || "",
+        id: beneficiary._id || "",
       }));
+      setValues(mappedValues);
     } else {
       // Reset the form values when no beneficiaries are present
-      setValues({
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        dob: "",
-        relationship: "",
-        percentage: "",
-      });
+      setValues([]);
     }
   }, [data]);
 
-  const handleChange = useCallback((event) => {
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
+
+  const handleChange = useCallback((event, beneficiaryIndex) => {
     const { name, value } = event.target;
-    setValues((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setValues((prevValues) => {
+      const updatedValues = [...prevValues];
+      updatedValues[beneficiaryIndex] = {
+        ...updatedValues[beneficiaryIndex],
+        [name]: value,
+      };
+      return updatedValues;
+    });
   }, []);
+  
 
   const handleInputChange = (event) => {
     setNewBene({ ...newBene, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (index) => {
+    // Access the beneficiary using the index
+    const beneficiary = values[index];
+    
+    // Perform the desired actions with the beneficiary data
+    console.log("Saving beneficiary:", beneficiary);
   };
 
   const handleAddBeneficiary = (event) => {
@@ -144,8 +176,8 @@ export default function Beneficiaries() {
         {data &&
         data.getBeneficiariesById &&
         data.getBeneficiariesById.length > 0 ? (
-          data.getBeneficiariesById.map((beneficiary) => (
-            <Box key={beneficiary._id} sx={{ mb: 2 }}>
+          values.map((beneficiary, index) => (
+            <Box key={beneficiary.id} sx={{ mb: 2 }}>
               <Card>
                 <CardHeader subheader="Beneficiary Information" />
                 <CardContent sx={{ pt: 0 }}>
@@ -157,9 +189,9 @@ export default function Beneficiaries() {
                           helperText="Please specify the first name"
                           label="First name"
                           name="firstName"
-                          onChange={handleChange}
+                          onChange={(event) => handleChange(event, index)}
                           required
-                          value={beneficiary.first_name || ""}
+                          value={beneficiary.firstName || ""}
                         />
                       </Grid>
                       <Grid xs={12} md={6}>
@@ -167,9 +199,9 @@ export default function Beneficiaries() {
                           fullWidth
                           label="Middle Name"
                           name="middleName"
-                          onChange={handleChange}
+                          onChange={(event) => handleChange(event, index)}
                           required
-                          value={beneficiary.middle_name || ""}
+                          value={beneficiary.middleName || ""}
                         />
                       </Grid>
                       <Grid xs={12} md={6}>
@@ -177,9 +209,9 @@ export default function Beneficiaries() {
                           fullWidth
                           label="Last Name"
                           name="lastName"
-                          onChange={handleChange}
+                          onChange={(event) => handleChange(event, index)}
                           required
-                          value={beneficiary.last_name || ""}
+                          value={beneficiary.lastName|| ""}
                         />
                       </Grid>
                       <Grid xs={12} md={6}>
@@ -187,7 +219,7 @@ export default function Beneficiaries() {
                           fullWidth
                           label="Email"
                           name="email"
-                          onChange={handleChange}
+                          onChange={(event) => handleChange(event, index)}
                           required
                           value={beneficiary.email || ""}
                         />
@@ -197,9 +229,9 @@ export default function Beneficiaries() {
                           fullWidth
                           label="Phone Number"
                           name="phone"
-                          onChange={handleChange}
+                          onChange={(event) => handleChange(event, index)}
                           type="number"
-                          value={beneficiary.phone_number || ""}
+                          value={beneficiary.phone || ""}
                         />
                       </Grid>
                       <Grid xs={12} md={6}>
@@ -207,9 +239,9 @@ export default function Beneficiaries() {
                           fullWidth
                           label="Date of Birth"
                           name="dob"
-                          onChange={handleChange}
+                          onChange={(event) => handleChange(event, index)}
                           required
-                          value={beneficiary.birthday || ""}
+                          value={beneficiary.dob || ""}
                         />
                       </Grid>
                       <Grid xs={12} md={6}>
@@ -217,7 +249,7 @@ export default function Beneficiaries() {
                           fullWidth
                           label="Relationship"
                           name="relationship"
-                          onChange={handleChange}
+                          onChange={(event) => handleChange(event, index)}
                           required
                           value={beneficiary.relationship || ""}
                         />
@@ -227,7 +259,7 @@ export default function Beneficiaries() {
                           fullWidth
                           label="Percentage"
                           name="percentage"
-                          onChange={handleChange}
+                          onChange={(event) => handleChange(event, index)}
                           required
                           value={beneficiary.percentage || ""}
                         />
@@ -237,7 +269,7 @@ export default function Beneficiaries() {
                 </CardContent>
                 <Divider />
                 <CardActions sx={{ justifyContent: "flex-end" }}>
-                  <Button variant="contained" onClick={handleSubmit}>
+                  <Button variant="contained" onClick={() => handleSubmit(index)}>
                     Save details
                   </Button>
                 </CardActions>

@@ -41,6 +41,16 @@ const resolvers = {
       );
       return newBeneficiary;
     },
+    updateBeneficiary: async (parent, { beneficiary_id, input }) => {
+      const updatedBeneficiary = await Beneficiary.findByIdAndUpdate(
+        { _id: beneficiary_id },
+        input,
+        {
+          new: true,
+        }
+      );
+      return updatedBeneficiary;
+    },
   },
 };
 
