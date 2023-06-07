@@ -15,7 +15,7 @@ import {
 import { useLoaderData } from "react-router-dom";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { GET_BENEFICIARIES } from "../utils/queries";
-import { CREATE_BENEFICIARY } from "../utils/mutations";
+import { CREATE_BENEFICIARY, UPDATE_BENEFICIARY } from "../utils/mutations";
 
 export default function Beneficiaries() {
   const { id } = useLoaderData();
@@ -36,6 +36,20 @@ export default function Beneficiaries() {
     user_id: id,
   });
 
+  const [values, setValues] = useState([
+    {
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      dob: "",
+      relationship: "",
+      percentage: "",
+      id: "",
+    },
+  ]);
+
   const [createBeneficiary] = useMutation(CREATE_BENEFICIARY, {
     variables: {
       firstName: newBene.first_name,
@@ -48,17 +62,7 @@ export default function Beneficiaries() {
     },
   });
 
-  const [values, setValues] = useState([{
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    dob: "",
-    relationship: "",
-    percentage: "",
-    id: "",
-  }]);
+  const [updateBeneficiary] = useMutation(UPDATE_BENEFICIARY);
 
   useEffect(() => {
     if (id) {
@@ -100,7 +104,11 @@ export default function Beneficiaries() {
   // }, [data]);
 
   useEffect(() => {
-    if (data && data.getBeneficiariesById && data.getBeneficiariesById.length > 0) {
+    if (
+      data &&
+      data.getBeneficiariesById &&
+      data.getBeneficiariesById.length > 0
+    ) {
       const mappedValues = data.getBeneficiariesById.map((beneficiary) => ({
         firstName: beneficiary.first_name || "",
         middleName: beneficiary.middle_name || "",
@@ -134,7 +142,6 @@ export default function Beneficiaries() {
       return updatedValues;
     });
   }, []);
-  
 
   const handleInputChange = (event) => {
     setNewBene({ ...newBene, [event.target.name]: event.target.value });
@@ -143,7 +150,27 @@ export default function Beneficiaries() {
   const handleSubmit = async (index) => {
     // Access the beneficiary using the index
     const beneficiary = values[index];
-    
+    try {
+      const response = await updateBeneficiary({
+        variables: {
+          beneficiaryId: beneficiary.id,
+          input: {
+            first_name: beneficiary.firstName,
+            middle_name: beneficiary.middleName,
+            last_name: beneficiary.lastName,
+            email: beneficiary.email,
+            phone_number: beneficiary.phone,
+            relationship: beneficiary.relationship,
+            percentage: parseInt(beneficiary.percentage),
+            birthday: beneficiary.dob,
+          },
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+
     // Perform the desired actions with the beneficiary data
     console.log("Saving beneficiary:", beneficiary);
   };
@@ -211,7 +238,7 @@ export default function Beneficiaries() {
                           name="lastName"
                           onChange={(event) => handleChange(event, index)}
                           required
-                          value={beneficiary.lastName|| ""}
+                          value={beneficiary.lastName || ""}
                         />
                       </Grid>
                       <Grid xs={12} md={6}>
@@ -269,7 +296,10 @@ export default function Beneficiaries() {
                 </CardContent>
                 <Divider />
                 <CardActions sx={{ justifyContent: "flex-end" }}>
-                  <Button variant="contained" onClick={() => handleSubmit(index)}>
+                  <Button
+                    variant="contained"
+                    onClick={() => handleSubmit(index)}
+                  >
                     Save details
                   </Button>
                 </CardActions>
