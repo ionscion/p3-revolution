@@ -4,7 +4,7 @@ function Header() {
       //   <h1>Legacy Systems</h1>
       // </div>
       <div>
-        <h1>Legacy Systems</h1>
+        <h1>Legacy Architects</h1>
       </div>
     );
   }
