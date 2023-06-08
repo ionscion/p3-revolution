@@ -20,6 +20,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Beneficiaries from "../components/Beneficiaries";
 
+
+
 // import { AddressAutocomplete } from '../components/AddressAutocomplete';
 
 function TabPanel(props) {
@@ -174,7 +176,7 @@ export const ClientProfileDetails = () => {
                   <TextField
                     fullWidth
                     helperText="Please specify the first name"
-                    label="First name"
+                    label="First Name"
                     name="firstName"
                     onChange={handleChange}
                     required
@@ -184,7 +186,7 @@ export const ClientProfileDetails = () => {
                 <Grid xs={12} md={6}>
                   <TextField
                     fullWidth
-                    label="Last name"
+                    label="Last Name"
                     name="lastName"
                     onChange={handleChange}
                     required
@@ -194,7 +196,7 @@ export const ClientProfileDetails = () => {
                 <Grid xs={12} md={6}>
                   <TextField
                     fullWidth
-                    label="Email Address"
+                    label="E-Mail Address"
                     name="email"
                     onChange={handleChange}
                     required
@@ -296,7 +298,7 @@ export const ClientProfileDetails = () => {
           </CardContent>
           <Divider />
           <CardActions sx={{ justifyContent: "flex-end" }}>
-            <Button variant="contained" onClick={handleSubmit}>
+            <Button variant="contained" onClick={handleSubmit} style={{marginTop:"15px", backgroundColor: "#0B746C", color: "white"}}>
               Save details
             </Button>
           </CardActions>

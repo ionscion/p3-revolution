@@ -194,7 +194,7 @@ export default function Beneficiaries() {
       <CardHeader
         subheader="This information can be edited"
         action={
-          <Button variant="contained" onClick={handleOpenModal}>
+          <Button style={{backgroundColor: "#0B746C", color: "white"}} variant="contained" onClick={handleOpenModal}>
             Add Beneficiary
           </Button>
         }
@@ -237,7 +237,7 @@ export default function Beneficiaries() {
                       />
                       <TextField
                         required
-                        label="Email"
+                        label="E-Mail"
                         type="email"
                         variant="outlined"
                         margin="normal"
@@ -297,7 +297,7 @@ export default function Beneficiaries() {
                         <TextField
                           fullWidth
                           helperText="Please specify the first name"
-                          label="First name"
+                          label="First Name"
                           name="firstName"
                           onChange={(event) => handleChange(event, index)}
                           required
@@ -327,7 +327,7 @@ export default function Beneficiaries() {
                       <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
-                          label="Email"
+                          label="E-Mail"
                           name="email"
                           onChange={(event) => handleChange(event, index)}
                           required
