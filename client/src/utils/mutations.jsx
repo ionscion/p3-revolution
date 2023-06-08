@@ -67,23 +67,3 @@ export const CREATE_BENEFICIARY = gql`
     }
   }
 `;
-
-export const UPDATE_BENEFICIARY = gql`
-  mutation UpdateBeneficiary($beneficiaryId: ID!, $input: BeneficiaryInput) {
-    updateBeneficiary(beneficiary_id: $beneficiaryId, input: $input) {
-      _id
-      first_name
-      middle_name
-      last_name
-      email
-      phone_number
-      birthday
-      is_active
-      created_at
-      updated_at
-      relationship
-      user_id
-      percentage
-    }
-  }
-`;
