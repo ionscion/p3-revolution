@@ -85,7 +85,7 @@ export default function Dashboard() {
         onClick={handleClick}
         variant="outlined"
         size="large"
-        color="secondary"
+        style={{ marginTop: "10px", borderRadius: "8px", backgroundColor: "#0B746C", color: "white"}}
       >
         Dashboard
       </Button>
@@ -107,8 +107,7 @@ export default function Dashboard() {
             All Contacts
           </Link>
         </MenuItem>
-        <MenuItem onClick={handleOpenModal}>New Contact</MenuItem>
-
+        <MenuItem style={{ fontFamily: "Comfortaa"}} onClick={handleOpenModal}>New Contact</MenuItem>
         <MenuItem onClick={handleClose}>
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
             Home
@@ -128,7 +127,7 @@ export default function Dashboard() {
             minWidth: 400,
           }}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography style={{fontFamily: "Comfortaa"}} variant="h6" gutterBottom>
             New Contact
           </Typography>
           <form onSubmit={handleSubmitForm}>
@@ -171,7 +170,7 @@ export default function Dashboard() {
                 value={client.phone_number}
                 onChange={handleInputChange}
               />
-              <Button type="submit" variant="contained">
+              <Button style={{marginTop:"15px", backgroundColor: "#0B746C", color: "white"}} type="submit" variant="contained">
                 Save
               </Button>
             </Box>
