@@ -275,7 +275,7 @@ export default function Beneficiaries() {
                         value={newBene.percentage}
                         onChange={handleInputChange}
                       />
-                      <Button type="submit" variant="contained">
+                      <Button style={{backgroundColor: "#0B746C", color: "white"}} type="submit" variant="contained">
                         Save
                       </Button>
                     </Box>
