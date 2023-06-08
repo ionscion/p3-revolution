@@ -17,6 +17,8 @@ import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { GET_BENEFICIARIES } from "../utils/queries";
 import { CREATE_BENEFICIARY } from "../utils/mutations";
 
+//comment again
+
 export default function Beneficiaries() {
   const { id } = useLoaderData();
   const [isModalOpen, setIsModalOpen] = useState(false);
