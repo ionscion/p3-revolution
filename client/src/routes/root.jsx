@@ -7,6 +7,7 @@ import { Outlet } from "react-router-dom";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 import { Switch, FormControlLabel } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
+import '../styles/style.css';
 
 
 
@@ -46,7 +47,7 @@ function Root() {
     },
     typography: {
       // Add specific typography styles for dark mode
-      fontFamily: "Roboto, sans-serif",
+      fontFamily: "Comfortaa",
       fontWeight: 400,
       h1: {
         fontSize: "2rem",
@@ -63,6 +64,8 @@ function Root() {
           root: {
             backgroundColor: darkMode ? "#333" : "#F5F5F5",
             color: darkMode ? "#FFF" : "#000",
+            fontWeight: 'bold',
+            fontSize: '12px',
           },
         },
       },
@@ -83,7 +86,7 @@ function Root() {
       <ThemeProvider theme={theme}>
       <CssBaseline />
         <ButtonAppBar />
-        <FormControlLabel
+        <FormControlLabel 
           control={<Switch checked={darkMode} onChange={toggleDarkMode} />}
           label={darkMode ? "Dark Mode" : "Light Mode"}
         />
