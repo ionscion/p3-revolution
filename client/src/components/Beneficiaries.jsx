@@ -199,6 +199,89 @@ export default function Beneficiaries() {
           </Button>
         }
       />
+        <Modal open={isModalOpen} onClose={handleCloseModal}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "background.paper",
+                    boxShadow: 24,
+                    p: 4,
+                    minWidth: 400,
+                  }}
+                >
+                  <Typography variant="h6" gutterBottom>
+                    New Beneficiary
+                  </Typography>
+                  <form onSubmit={handleAddBeneficiary}>
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <TextField
+                        required
+                        label="First Name"
+                        variant="outlined"
+                        margin="normal"
+                        name="first_name"
+                        value={newBene.first_name}
+                        onChange={handleInputChange}
+                      />
+                      <TextField
+                        required
+                        label="Last Name"
+                        variant="outlined"
+                        margin="normal"
+                        name="last_name"
+                        value={newBene.last_name}
+                        onChange={handleInputChange}
+                      />
+                      <TextField
+                        required
+                        label="Email"
+                        type="email"
+                        variant="outlined"
+                        margin="normal"
+                        name="email"
+                        value={newBene.email}
+                        onChange={handleInputChange}
+                      />
+                      <TextField
+                        required
+                        label="Phone Number"
+                        type="input"
+                        variant="outlined"
+                        margin="normal"
+                        name="phone_number"
+                        value={newBene.phone_number}
+                        onChange={handleInputChange}
+                      />
+                      <TextField
+                        required
+                        label="Relationship"
+                        type="input"
+                        variant="outlined"
+                        margin="normal"
+                        name="relationship"
+                        value={newBene.relationship}
+                        onChange={handleInputChange}
+                      />
+                      <TextField
+                        required
+                        label="Percentage"
+                        type="input"
+                        variant="outlined"
+                        margin="normal"
+                        name="percentage"
+                        value={newBene.percentage}
+                        onChange={handleInputChange}
+                      />
+                      <Button type="submit" variant="contained">
+                        Save
+                      </Button>
+                    </Box>
+                  </form>
+                </Box>
+              </Modal>
       <CardContent sx={{ pt: 0 }}>
         {data &&
         data.getBeneficiariesById &&
@@ -304,93 +387,12 @@ export default function Beneficiaries() {
                   </Button>
                 </CardActions>
               </Card>
-              <Modal open={isModalOpen} onClose={handleCloseModal}>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    bgcolor: "background.paper",
-                    boxShadow: 24,
-                    p: 4,
-                    minWidth: 400,
-                  }}
-                >
-                  <Typography variant="h6" gutterBottom>
-                    New Beneficiary
-                  </Typography>
-                  <form onSubmit={handleAddBeneficiary}>
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                      <TextField
-                        required
-                        label="First Name"
-                        variant="outlined"
-                        margin="normal"
-                        name="first_name"
-                        value={newBene.first_name}
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        required
-                        label="Last Name"
-                        variant="outlined"
-                        margin="normal"
-                        name="last_name"
-                        value={newBene.last_name}
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        required
-                        label="Email"
-                        type="email"
-                        variant="outlined"
-                        margin="normal"
-                        name="email"
-                        value={newBene.email}
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        required
-                        label="Phone Number"
-                        type="input"
-                        variant="outlined"
-                        margin="normal"
-                        name="phone_number"
-                        value={newBene.phone_number}
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        required
-                        label="Relationship"
-                        type="input"
-                        variant="outlined"
-                        margin="normal"
-                        name="relationship"
-                        value={newBene.relationship}
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        required
-                        label="Percentage"
-                        type="input"
-                        variant="outlined"
-                        margin="normal"
-                        name="percentage"
-                        value={newBene.percentage}
-                        onChange={handleInputChange}
-                      />
-                      <Button type="submit" variant="contained">
-                        Save
-                      </Button>
-                    </Box>
-                  </form>
-                </Box>
-              </Modal>
+            
             </Box>
           ))
         ) : (
           <Typography variant="body1">No beneficiaries found.</Typography>
+          
         )}
       </CardContent>
     </Card>
