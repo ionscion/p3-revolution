@@ -62,6 +62,12 @@ const clientSchema = new Schema(
         ref: "Beneficiary",
       },
     ],
+    financials: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Financial",
+      },
+    ],
   },
   {
     toJSON: {

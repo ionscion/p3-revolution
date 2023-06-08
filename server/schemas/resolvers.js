@@ -1,4 +1,4 @@
-const { Client, Beneficiary } = require("../models");
+const { Client, Beneficiary, Financial} = require("../models");
 
 const resolvers = {
   Query: {
@@ -16,6 +16,9 @@ const resolvers = {
     getBeneficiariesById: async (parent, { Client_id }) => {
       const client = await Client.findById(Client_id).populate("beneficiaries");
       return client.beneficiaries;
+    },
+    getFinancials: async (parent, { Client_id }) => {
+      return await Financial.find({ Client_id });
     },
   },
   Mutation: {

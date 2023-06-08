@@ -45,6 +45,17 @@ const typeDefs = gql`
     client: Client
   }
 
+  type Financial {
+    _id: ID
+    user_id: String
+    client: Client
+    account_name: String!
+    account_number: Int!
+    account_type: String!
+    bank_name: String!
+    account_balance: Int!
+  }
+
   input ClientInput {
     first_name: String
     middle_name: String
@@ -78,6 +89,7 @@ const typeDefs = gql`
     getClientNoAuth: [Client]
     getClientById(_id: ID!): Client
     getBeneficiariesById(Client_id: ID!): [Beneficiary]
+    getFinancials(Client_id: ID!): [Financial]
   }
 
   type Mutation {
