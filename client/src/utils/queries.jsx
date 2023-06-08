@@ -83,3 +83,11 @@ query GetBeneficiariesById($clientId: ID!) {
   }
 }
 `;
+
+export const GET_FINANCIALS = gql`
+  query GetFinancials($clientId: ID!) {
+    getFinancials(Client_id: $clientId) {
+      _id
+    }
+  }
+`;

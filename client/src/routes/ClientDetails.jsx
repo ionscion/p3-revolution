@@ -19,10 +19,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Beneficiaries from "../components/Beneficiaries";
-
-
-
-// import { AddressAutocomplete } from '../components/AddressAutocomplete';
+import Financials from "../components/Financials";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -163,7 +160,10 @@ export const ClientProfileDetails = () => {
       </Box>
       <TabPanel value={tabValue} index={0}>
         <Card>
-          <CardHeader subheader="This information can be edited." style={{marginBottom:'20px'}}/>
+          <CardHeader
+            subheader="This information can be edited."
+            style={{ marginBottom: "20px" }}
+          />
           <CardContent sx={{ pt: 0 }}>
             <Box sx={{ m: -1.5 }}>
               <Grid container spacing={3}>
@@ -292,21 +292,27 @@ export const ClientProfileDetails = () => {
           </CardContent>
           <Divider />
           <CardActions sx={{ justifyContent: "flex-end" }}>
-            <Button variant="contained" onClick={handleSubmit} style={{marginTop:"15px", backgroundColor: "#0B746C", color: "white"}}>
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              style={{
+                marginTop: "15px",
+                backgroundColor: "#0B746C",
+                color: "white",
+              }}
+            >
               Save details
             </Button>
           </CardActions>
         </Card>
       </TabPanel>
 
-      {/* Second Tab */}
       <TabPanel value={tabValue} index={1}>
-     <Beneficiaries />
+        <Beneficiaries />
       </TabPanel>
 
-      {/* Third Tab */}
       <TabPanel value={tabValue} index={2}>
-        {/* Content for the third tab */}
+        <Financials />
       </TabPanel>
     </Box>
   );
