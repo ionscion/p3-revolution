@@ -28,7 +28,7 @@ function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Box
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
@@ -40,7 +40,7 @@ function TabPanel(props) {
           <Typography>{children}</Typography>
         </Box>
       )}
-    </div>
+    </Box>
   );
 }
 
@@ -95,7 +95,6 @@ export const ClientProfileDetails = () => {
 
   useEffect(() => {
     if (data && data.getClientById) {
-      console.log(data);
       const client = data.getClientById;
       setValues((prevState) => ({
         ...prevState,
@@ -122,10 +121,6 @@ export const ClientProfileDetails = () => {
       [name]: value,
     }));
   }, []);
-
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

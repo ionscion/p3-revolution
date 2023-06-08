@@ -51,6 +51,12 @@ const resolvers = {
       );
       return updatedBeneficiary;
     },
+    deleteBeneficiary: async (parent, { beneficiary_id }) => {
+      const deletedBeneficiary = await Beneficiary.findByIdAndDelete({
+        _id: beneficiary_id,
+      });
+      return deletedBeneficiary;
+    },
   },
 };
 

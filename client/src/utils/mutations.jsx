@@ -87,3 +87,11 @@ export const UPDATE_BENEFICIARY = gql`
     }
   }
 `;
+
+export const DELETE_BENEFICIARY = gql`
+  mutation DeleteBeneficiary($beneficiaryId: ID!) {
+    deleteBeneficiary(beneficiary_id: $beneficiaryId) {
+      _id
+    }
+  }
+`;

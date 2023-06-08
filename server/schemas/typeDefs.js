@@ -104,6 +104,7 @@ const typeDefs = gql`
       clientId: ID!
     ): Beneficiary
     updateBeneficiary(beneficiary_id: ID!, input: BeneficiaryInput): Beneficiary
+    deleteBeneficiary(beneficiary_id: ID!): Beneficiary
   }
 `;
 

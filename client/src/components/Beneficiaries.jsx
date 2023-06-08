@@ -15,7 +15,12 @@ import {
 import { useLoaderData } from "react-router-dom";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { GET_BENEFICIARIES } from "../utils/queries";
-import { CREATE_BENEFICIARY, UPDATE_BENEFICIARY } from "../utils/mutations";
+import {
+  CREATE_BENEFICIARY,
+  UPDATE_BENEFICIARY,
+  DELETE_BENEFICIARY,
+} from "../utils/mutations";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function Beneficiaries() {
   const { id } = useLoaderData();
@@ -64,44 +69,13 @@ export default function Beneficiaries() {
 
   const [updateBeneficiary] = useMutation(UPDATE_BENEFICIARY);
 
+  const [deleteBeneficiary] = useMutation(DELETE_BENEFICIARY);
+
   useEffect(() => {
     if (id) {
       fetchBeneficiariesQuery();
     }
   }, [id]);
-
-  // useEffect(() => {
-  //   if (
-  //     data &&
-  //     data.getBeneficiariesById &&
-  //     data.getBeneficiariesById.length > 0
-  //   ) {
-  //     const [beneficiary] = data.getBeneficiariesById; // Access the first beneficiary in the array
-  //     setValues((prevState) => ({
-  //       ...prevState,
-  //       firstName: beneficiary.first_name ? beneficiary.first_name : "",
-  //       middleName: beneficiary.middle_name ? beneficiary.middle_name : "",
-  //       lastName: beneficiary.last_name ? beneficiary.last_name : "",
-  //       email: beneficiary.email ? beneficiary.email : "",
-  //       phone: beneficiary.phone_number ? beneficiary.phone_number : "",
-  //       dob: beneficiary.birthday ? beneficiary.birthday : "",
-  //       relationship: beneficiary.relationship ? beneficiary.relationship : "",
-  //       percentage: beneficiary.percentage ? beneficiary.percentage : "",
-  //     }));
-  //   } else {
-  //     // Reset the form values when no beneficiaries are present
-  //     setValues({
-  //       firstName: "",
-  //       middleName: "",
-  //       lastName: "",
-  //       email: "",
-  //       phone: "",
-  //       dob: "",
-  //       relationship: "",
-  //       percentage: "",
-  //     });
-  //   }
-  // }, [data]);
 
   useEffect(() => {
     if (
@@ -126,10 +100,6 @@ export default function Beneficiaries() {
       setValues([]);
     }
   }, [data]);
-
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
 
   const handleChange = useCallback((event, beneficiaryIndex) => {
     const { name, value } = event.target;
@@ -177,7 +147,6 @@ export default function Beneficiaries() {
 
   const handleAddBeneficiary = (event) => {
     event.preventDefault();
-    console.log("Add beneficiary");
     createBeneficiary();
   };
 
@@ -189,99 +158,121 @@ export default function Beneficiaries() {
     setIsModalOpen(false);
   };
 
+  const handleDelete = async (index) => {
+    const beneficiary = values[index];
+    try {
+      const response = await deleteBeneficiary({
+        variables: {
+          beneficiaryId: beneficiary.id,
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Card>
       <CardHeader
         subheader="This information can be edited"
         action={
-          <Button style={{backgroundColor: "#0B746C", color: "white"}} variant="contained" onClick={handleOpenModal}>
+          <Button
+            style={{ backgroundColor: "#0B746C", color: "white" }}
+            variant="contained"
+            onClick={handleOpenModal}
+          >
             Add Beneficiary
           </Button>
         }
       />
-        <Modal open={isModalOpen} onClose={handleCloseModal}>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    bgcolor: "background.paper",
-                    boxShadow: 24,
-                    p: 4,
-                    minWidth: 400,
-                  }}
-                >
-                  <Typography variant="h6" gutterBottom>
-                    New Beneficiary
-                  </Typography>
-                  <form onSubmit={handleAddBeneficiary}>
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                      <TextField
-                        required
-                        label="First Name"
-                        variant="outlined"
-                        margin="normal"
-                        name="first_name"
-                        value={newBene.first_name}
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        required
-                        label="Last Name"
-                        variant="outlined"
-                        margin="normal"
-                        name="last_name"
-                        value={newBene.last_name}
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        required
-                        label="E-Mail"
-                        type="email"
-                        variant="outlined"
-                        margin="normal"
-                        name="email"
-                        value={newBene.email}
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        required
-                        label="Phone Number"
-                        type="input"
-                        variant="outlined"
-                        margin="normal"
-                        name="phone_number"
-                        value={newBene.phone_number}
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        required
-                        label="Relationship"
-                        type="input"
-                        variant="outlined"
-                        margin="normal"
-                        name="relationship"
-                        value={newBene.relationship}
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        required
-                        label="Percentage"
-                        type="input"
-                        variant="outlined"
-                        margin="normal"
-                        name="percentage"
-                        value={newBene.percentage}
-                        onChange={handleInputChange}
-                      />
-                      <Button style={{backgroundColor: "#0B746C", color: "white"}} type="submit" variant="contained">
-                        Save
-                      </Button>
-                    </Box>
-                  </form>
-                </Box>
-              </Modal>
+      <Modal open={isModalOpen} onClose={handleCloseModal}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            minWidth: 400,
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            New Beneficiary
+          </Typography>
+          <form onSubmit={handleAddBeneficiary}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <TextField
+                required
+                label="First Name"
+                variant="outlined"
+                margin="normal"
+                name="first_name"
+                value={newBene.first_name}
+                onChange={handleInputChange}
+              />
+              <TextField
+                required
+                label="Last Name"
+                variant="outlined"
+                margin="normal"
+                name="last_name"
+                value={newBene.last_name}
+                onChange={handleInputChange}
+              />
+              <TextField
+                required
+                label="E-Mail"
+                type="email"
+                variant="outlined"
+                margin="normal"
+                name="email"
+                value={newBene.email}
+                onChange={handleInputChange}
+              />
+              <TextField
+                required
+                label="Phone Number"
+                type="input"
+                variant="outlined"
+                margin="normal"
+                name="phone_number"
+                value={newBene.phone_number}
+                onChange={handleInputChange}
+              />
+              <TextField
+                required
+                label="Relationship"
+                type="input"
+                variant="outlined"
+                margin="normal"
+                name="relationship"
+                value={newBene.relationship}
+                onChange={handleInputChange}
+              />
+              <TextField
+                required
+                label="Percentage"
+                type="input"
+                variant="outlined"
+                margin="normal"
+                name="percentage"
+                value={newBene.percentage}
+                onChange={handleInputChange}
+              />
+              <Button
+                style={{ backgroundColor: "#0B746C", color: "white" }}
+                type="submit"
+                variant="contained"
+              >
+                Save
+              </Button>
+            </Box>
+          </form>
+        </Box>
+      </Modal>
       <CardContent sx={{ pt: 0 }}>
         {data &&
         data.getBeneficiariesById &&
@@ -378,7 +369,17 @@ export default function Beneficiaries() {
                   </Box>
                 </CardContent>
                 <Divider />
-                <CardActions sx={{ justifyContent: "flex-end" }}>
+
+                <CardActions
+                  disableSpacing
+                  sx={{ justifyContent: "space-between" }}
+                >
+                  <Button
+                    variant="contained"
+                    onClick={() => handleDelete(index)}
+                  >
+                    <DeleteIcon />
+                  </Button>
                   <Button
                     variant="contained"
                     onClick={() => handleSubmit(index)}
@@ -387,12 +388,10 @@ export default function Beneficiaries() {
                   </Button>
                 </CardActions>
               </Card>
-            
             </Box>
           ))
         ) : (
           <Typography variant="body1">No beneficiaries found.</Typography>
-          
         )}
       </CardContent>
     </Card>
