@@ -191,8 +191,8 @@ export default function Beneficiaries() {
 
   return (
     <Card>
-      <CardHeader
-        subheader="This information can be edited"
+      <CardHeader 
+        subheader="This information can be edited."
         action={
           <Button style={{backgroundColor: "#0B746C", color: "white"}} variant="contained" onClick={handleOpenModal}>
             Add Beneficiary

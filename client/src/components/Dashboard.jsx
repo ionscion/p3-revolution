@@ -14,6 +14,7 @@ import { CREATE_CLIENT } from "../utils/mutations";
 import IconButton from "./IconButton"
 
 
+
 export default function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -85,7 +86,7 @@ export default function Dashboard() {
         onClick={handleClick}
         variant="outlined"
         size="large"
-        style={{ marginTop: "10px", borderRadius: "8px", backgroundColor: "#0B746C", color: "white"}}
+        style={{ marginTop: "5px", borderRadius: "5px", backgroundColor: "#0B746C", color: "white", fontSize:'13px', fontWeight:'bold', paddingTop:'9px'}}
       >
         Dashboard
       </Button>
@@ -107,7 +108,7 @@ export default function Dashboard() {
             All Contacts
           </Link>
         </MenuItem>
-        <MenuItem style={{ fontFamily: "Comfortaa"}} onClick={handleOpenModal}>New Contact</MenuItem>
+        <MenuItem onClick={handleOpenModal}>New Contact</MenuItem>
         <MenuItem onClick={handleClose}>
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
             Home
@@ -127,7 +128,7 @@ export default function Dashboard() {
             minWidth: 400,
           }}
         >
-          <Typography style={{fontFamily: "Comfortaa"}} variant="h6" gutterBottom>
+          <Typography variant="h6" gutterBottom>
             New Contact
           </Typography>
           <form onSubmit={handleSubmitForm}>

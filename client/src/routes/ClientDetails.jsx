@@ -168,14 +168,13 @@ export const ClientProfileDetails = () => {
       </Box>
       <TabPanel value={tabValue} index={0}>
         <Card>
-          <CardHeader subheader="This information can be edited" />
+          <CardHeader subheader="This information can be edited." style={{marginBottom:'20px'}}/>
           <CardContent sx={{ pt: 0 }}>
             <Box sx={{ m: -1.5 }}>
               <Grid container spacing={3}>
                 <Grid xs={12} md={6}>
                   <TextField
                     fullWidth
-                    helperText="Please specify the first name"
                     label="First Name"
                     name="firstName"
                     onChange={handleChange}

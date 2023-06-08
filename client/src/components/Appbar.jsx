@@ -26,7 +26,7 @@ export default function ButtonAppBar() {
           >
             {/* <MenuIcon /> */}
           </IconButton>
-          <Typography variant="h2" component="div" sx={{ flexGrow: 1 }} style={{fontFamily: "Comfortaa", fontSize: "3em", padding:"10px"}}>
+          <Typography variant="h2" component="div" sx={{ flexGrow: 1 }} style={{fontSize: "3.4em", paddingTop:'8px'}}>
             Legacy Architects
           </Typography>
           {!isAuthenticated && <LoginButton/>}

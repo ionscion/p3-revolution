@@ -5,7 +5,7 @@ import { useOutletContext, Link, useNavigate } from "react-router-dom";
 
 const columns = [
   // { field: "id", headerName: "Id", width: 200 },
-  { field: "firstName", headerName: "First Name", width: 130 },
+  { field: "firstName", headerName: "First Name", width: 130, },
   { field: "middleName", headerName: "Middle Name", width: 130 },
   { field: "lastName", headerName: "Last Name", width: 130 },
   { field: "email", headerName: "E-Mail", width: 150 },
@@ -48,7 +48,7 @@ export default function DataTable() {
 
   return (
     <div style={{ height: 500, width: "100%" }}>
-      <Typography variant="h4">Client List</Typography>
+      <Typography variant="h4" style={{fontFamily:"Tahoma", fontSize: "29px", marginLeft:'10px', marginTop:'20px'}}>Client List</Typography>
       <DataGrid
         onRowClick={handleRowClick}
         onCellClick={handleRowClick}
@@ -57,6 +57,7 @@ export default function DataTable() {
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
+        style={{margin:'10px'}}
       />
     </div>
   );
