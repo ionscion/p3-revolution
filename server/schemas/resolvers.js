@@ -70,7 +70,24 @@ const resolvers = {
       );
       return newFinancial;
     },
+    updateFinancial: async (parent, { financial_id, input }) => {
+      const updatedFinancial = await Financial.findByIdAndUpdate(
+        { _id: financial_id },
+        input,
+        {
+          new: true,
+        }
+      );
+      return updatedFinancial;
+    },
+    deleteFinancial: async (parent, { financial_id }) => {
+      const deletedFinancial = await Financial.findByIdAndDelete({
+        _id: financial_id,
+      });
+      return deletedFinancial;
+    },
   },
+ 
 };
 
 module.exports = resolvers;

@@ -96,6 +96,14 @@ export const DELETE_BENEFICIARY = gql`
   }
 `;
 
+export const DELETE_FINANCIAL = gql`
+  mutation DeleteFinancial($financialId: ID!) {
+    deleteFinancial(financial_id: $financialId) {
+      _id
+    }
+  }
+`;
+
 export const CREATE_FINANCIAL = gql`
   mutation CreateFinancial(
     $accountName: String!
@@ -120,6 +128,19 @@ export const CREATE_FINANCIAL = gql`
       account_type
       bank_name
       account_balance
+    }
+  }
+`;
+
+export const UPDATE_FINANCIAL = gql`
+  mutation UpdateFinancial($financialId: ID!, $input: FinancialInput) {
+    updateFinancial(financial_id: $financialId, input: $input) {
+      account_name
+      account_number
+      account_type
+      bank_name
+      account_balance
+      _id
     }
   }
 `;

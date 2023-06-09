@@ -136,6 +136,8 @@ const typeDefs = gql`
       account_balance: Int!
       clientId: ID!
     ): Financial
+    updateFinancial(financial_id: ID!, input: FinancialInput): Financial
+    deleteFinancial(financial_id: ID!): Financial
   }
 `;
 

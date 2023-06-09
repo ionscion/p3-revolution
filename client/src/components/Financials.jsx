@@ -15,7 +15,11 @@ import {
 import { useLoaderData } from "react-router-dom";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_FINANCIALS } from "../utils/queries";
-import { CREATE_FINANCIAL } from "../utils/mutations";
+import {
+  CREATE_FINANCIAL,
+  UPDATE_FINANCIAL,
+  DELETE_FINANCIAL,
+} from "../utils/mutations";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useModal from "../hooks/useModal";
 
@@ -26,6 +30,9 @@ export default function Financials() {
   const [getFinancials, { data }] = useLazyQuery(GET_FINANCIALS, {
     variables: { clientId: id },
   });
+
+  const [updateFinancial] = useMutation(UPDATE_FINANCIAL);
+  const [deleteFinancial] = useMutation(DELETE_FINANCIAL);
 
   const [newFinancial, setNewFinancial] = useState({
     account_name: "",
@@ -103,6 +110,43 @@ export default function Financials() {
     event.preventDefault();
     console.log(newFinancial);
     createFinancial();
+  };
+
+  const handleSubmit = async (index) => {
+    // Access the financial using the index
+    const financial = values[index];
+    try {
+      const response = await updateFinancial({
+        variables: {
+          financialId: financial.id,
+          input: {
+            account_name: financial.accountName,
+            account_number: parseInt(financial.accountNumber),
+            account_type: financial.accountType,
+            bank_name: financial.bankName,
+            account_balance: parseInt(financial.accountBalance),
+          },
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+    console.log("Saving beneficiary:", financial);
+  };
+
+  const handleDelete = async (index) => {
+    const financial = values[index];
+    try {
+      const response = await deleteFinancial({
+        variables: {
+          financialId: financial.id,
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
