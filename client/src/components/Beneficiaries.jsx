@@ -263,7 +263,7 @@ export default function Beneficiaries() {
                 onChange={handleInputChange}
               />
               <Button
-                style={{ backgroundColor: "#0B746C", color: "white" }}
+                style={{ backgroundColor: "#0B746C", color: "white", marginTop:'15px'}}
                 type="submit"
                 variant="contained"
               >
