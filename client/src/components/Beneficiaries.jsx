@@ -13,7 +13,7 @@ import {
   Modal,
 } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_BENEFICIARIES } from "../utils/queries";
 import {
   CREATE_BENEFICIARY,
@@ -21,10 +21,11 @@ import {
   DELETE_BENEFICIARY,
 } from "../utils/mutations";
 import DeleteIcon from "@mui/icons-material/Delete";
+import useModal from "../hooks/useModal";
 
 export default function Beneficiaries() {
   const { id } = useLoaderData();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
   const [fetchBeneficiariesQuery, { loading, error, data }] = useLazyQuery(
     GET_BENEFICIARIES,
     {
@@ -140,22 +141,12 @@ export default function Beneficiaries() {
     } catch (error) {
       console.error(error);
     }
-
-    // Perform the desired actions with the beneficiary data
     console.log("Saving beneficiary:", beneficiary);
   };
 
   const handleAddBeneficiary = (event) => {
     event.preventDefault();
     createBeneficiary();
-  };
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
   };
 
   const handleDelete = async (index) => {

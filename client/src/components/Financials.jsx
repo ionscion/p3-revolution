@@ -13,13 +13,14 @@ import {
   Modal,
 } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_FINANCIALS } from "../utils/queries";
 import DeleteIcon from "@mui/icons-material/Delete";
+import useModal from "../hooks/useModal";
 
 export default function Financials() {
   const { id } = useLoaderData();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
 
   const [getFinancials, { data }] = useLazyQuery(GET_FINANCIALS, {
     variables: { clientId: id },
@@ -91,14 +92,6 @@ export default function Financials() {
   const handleAddFinancials = (event) => {
     event.preventDefault();
     console.log(newFinancial);
-  };
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
   };
 
   return (
