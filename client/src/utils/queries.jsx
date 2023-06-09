@@ -65,29 +65,34 @@ export const GET_CLIENT = gql`
 `;
 
 export const GET_BENEFICIARIES = gql`
-query GetBeneficiariesById($clientId: ID!) {
-  getBeneficiariesById(Client_id: $clientId) {
-    _id
-    first_name
-    middle_name
-    last_name
-    email
-    phone_number
-    birthday
-    is_active
-    created_at
-    updated_at
-    relationship
-    user_id
-    percentage
+  query GetBeneficiariesById($clientId: ID!) {
+    getBeneficiariesById(Client_id: $clientId) {
+      _id
+      first_name
+      middle_name
+      last_name
+      email
+      phone_number
+      birthday
+      is_active
+      created_at
+      updated_at
+      relationship
+      user_id
+      percentage
+    }
   }
-}
 `;
 
 export const GET_FINANCIALS = gql`
   query GetFinancials($clientId: ID!) {
     getFinancials(Client_id: $clientId) {
       _id
+      account_balance
+      account_name
+      account_number
+      account_type
+      bank_name
     }
   }
 `;

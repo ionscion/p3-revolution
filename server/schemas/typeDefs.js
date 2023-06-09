@@ -26,6 +26,7 @@ const typeDefs = gql`
     updated_at: String
     user_id: String!
     beneficiaries: [Beneficiary]
+    financials: [Financial]
   }
 
   type Beneficiary {
@@ -117,6 +118,14 @@ const typeDefs = gql`
     ): Beneficiary
     updateBeneficiary(beneficiary_id: ID!, input: BeneficiaryInput): Beneficiary
     deleteBeneficiary(beneficiary_id: ID!): Beneficiary
+    createFinancial(
+      account_name: String!
+      account_number: Int!
+      account_type: String!
+      bank_name: String
+      account_balance: Int!
+      clientId: ID!
+    ): Financial
   }
 `;
 

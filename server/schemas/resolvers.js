@@ -18,7 +18,8 @@ const resolvers = {
       return client.beneficiaries;
     },
     getFinancials: async (parent, { Client_id }) => {
-      return await Financial.find({ Client_id });
+      const client = await Client.findById(Client_id).populate("financials");
+      return client.financials;
     },
   },
   Mutation: {
@@ -59,6 +60,15 @@ const resolvers = {
         _id: beneficiary_id,
       });
       return deletedBeneficiary;
+    },
+    createFinancial: async (parent, args) => {
+      const newFinancial = await Financial.create(args);
+      const updatedClient = await Client.findByIdAndUpdate(
+        args.clientId, // Use clientId to find the client by its ObjectId
+        { $push: { financials: newFinancial._id } },
+        { new: true }
+      );
+      return newFinancial;
     },
   },
 };

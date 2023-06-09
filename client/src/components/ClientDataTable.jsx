@@ -16,7 +16,7 @@ const columns = [
     width: 150,
     valueGetter: (params) => (params.row.isActive ? "Active" : "Inactive"),
   },
-  { field: "user_id", headerName: "Lawyer Id", width: 200 },
+  // { field: "user_id", headerName: "Lawyer Id", width: 200 },
 ];
 
 export default function DataTable() {

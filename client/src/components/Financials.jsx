@@ -15,6 +15,7 @@ import {
 import { useLoaderData } from "react-router-dom";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { GET_FINANCIALS } from "../utils/queries";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function Financials() {
   const { id } = useLoaderData();
@@ -34,6 +35,29 @@ export default function Financials() {
       id: "",
     },
   ]);
+
+  useEffect(() => {
+    if (id) {
+        getFinancials();
+    }
+    }, [id]);
+
+    useEffect(() => {
+        if (data && data.getFinancials && data.getFinancials.length > 0) {
+            const mappedData = data.getFinancials.map((financial) => ({
+                accountName: financial.account_name,
+                accountNumber: financial.account_number,
+                accountType: financial.account_type,
+                accountBalance: financial.account_balance,
+                bankName: financial.bank_name,
+                id: financial._id,
+            }));
+            setValues(mappedData);
+        } else {
+            setValues([]);
+        }
+    }, [data]);
+             
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
