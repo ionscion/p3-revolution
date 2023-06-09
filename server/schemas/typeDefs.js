@@ -84,6 +84,16 @@ const typeDefs = gql`
     client: ID
   }
 
+  input FinancialInput {
+    account_name: String
+    account_number: Int
+    account_type: String
+    bank_name: String
+    account_balance: Int
+    user_id: String
+    client: ID
+  }
+
   type Query {
     me: User
     getClients(user_id: String!): [Client]

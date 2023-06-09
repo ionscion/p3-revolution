@@ -95,3 +95,31 @@ export const DELETE_BENEFICIARY = gql`
     }
   }
 `;
+
+export const CREATE_FINANCIAL = gql`
+  mutation CreateFinancial(
+    $accountName: String!
+    $accountNumber: Int!
+    $accountType: String!
+    $accountBalance: Int!
+    $clientId: ID!
+    $bankName: String
+  ) {
+    createFinancial(
+      account_name: $accountName
+      account_number: $accountNumber
+      account_type: $accountType
+      account_balance: $accountBalance
+      clientId: $clientId
+      bank_name: $bankName
+    ) {
+      _id
+      user_id
+      account_name
+      account_number
+      account_type
+      bank_name
+      account_balance
+    }
+  }
+`;

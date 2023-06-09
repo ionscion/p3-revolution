@@ -15,6 +15,7 @@ import {
 import { useLoaderData } from "react-router-dom";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_FINANCIALS } from "../utils/queries";
+import { CREATE_FINANCIAL } from "../utils/mutations";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useModal from "../hooks/useModal";
 
@@ -26,16 +27,14 @@ export default function Financials() {
     variables: { clientId: id },
   });
 
-  const [newFinancial, setNewFinancial] = useState([
-    {
-      accountName: "",
-      accountNumber: "",
-      accountType: "",
-      accountBalance: "",
-      bankName: "",
-      user_id: id,
-    },
-  ]);
+  const [newFinancial, setNewFinancial] = useState({
+    account_name: "",
+    account_number: "",
+    account_type: "",
+    account_balance: "",
+    bank_name: "",
+    user_id: id,
+  });
 
   const [values, setValues] = useState([
     {
@@ -47,6 +46,17 @@ export default function Financials() {
       id: "",
     },
   ]);
+
+  const [createFinancial] = useMutation(CREATE_FINANCIAL, {
+    variables: {
+      accountName: newFinancial.account_name,
+      accountNumber: parseInt(newFinancial.account_number),
+      accountType: newFinancial.account_type,
+      accountBalance: parseInt(newFinancial.account_balance),
+      bankName: newFinancial.bank_name,
+      clientId: id,
+    },
+  });
 
   useEffect(() => {
     if (id) {
@@ -92,6 +102,7 @@ export default function Financials() {
   const handleAddFinancials = (event) => {
     event.preventDefault();
     console.log(newFinancial);
+    createFinancial();
   };
 
   return (
