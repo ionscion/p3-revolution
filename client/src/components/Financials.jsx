@@ -23,7 +23,18 @@ export default function Financials() {
 
   const [getFinancials, { data }] = useLazyQuery(GET_FINANCIALS, {
     variables: { clientId: id },
-    });
+  });
+
+  const [newFinancial, setNewFinancial] = useState([
+    {
+      accountName: "",
+      accountNumber: "",
+      accountType: "",
+      accountBalance: "",
+      bankName: "",
+      user_id: id,
+    },
+  ]);
 
   const [values, setValues] = useState([
     {
@@ -38,26 +49,49 @@ export default function Financials() {
 
   useEffect(() => {
     if (id) {
-        getFinancials();
+      getFinancials();
     }
-    }, [id]);
+  }, [id]);
 
-    useEffect(() => {
-        if (data && data.getFinancials && data.getFinancials.length > 0) {
-            const mappedData = data.getFinancials.map((financial) => ({
-                accountName: financial.account_name,
-                accountNumber: financial.account_number,
-                accountType: financial.account_type,
-                accountBalance: financial.account_balance,
-                bankName: financial.bank_name,
-                id: financial._id,
-            }));
-            setValues(mappedData);
-        } else {
-            setValues([]);
-        }
-    }, [data]);
-             
+  useEffect(() => {
+    if (data && data.getFinancials && data.getFinancials.length > 0) {
+      const mappedData = data.getFinancials.map((financial) => ({
+        accountName: financial.account_name,
+        accountNumber: financial.account_number,
+        accountType: financial.account_type,
+        accountBalance: financial.account_balance,
+        bankName: financial.bank_name,
+        id: financial._id,
+      }));
+      setValues(mappedData);
+    } else {
+      setValues([]);
+    }
+  }, [data]);
+
+  const handleChange = useCallback((event, financialIndex) => {
+    const { name, value } = event.target;
+    setValues((prevValues) => {
+      const updatedValues = [...prevValues];
+      updatedValues[financialIndex] = {
+        ...updatedValues[financialIndex],
+        [name]: value,
+      };
+      return updatedValues;
+    });
+  }, []);
+
+  const handleInputChange = (event) => {
+    setNewFinancial({
+      ...newFinancial,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleAddFinancials = (event) => {
+    event.preventDefault();
+    console.log(newFinancial);
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -81,7 +115,7 @@ export default function Financials() {
           </Button>
         }
       />
-      {/* <Modal open={isModalOpen} onClose={handleCloseModal}>
+      <Modal open={isModalOpen} onClose={handleCloseModal}>
         <Box
           sx={{
             position: "absolute",
@@ -97,66 +131,53 @@ export default function Financials() {
           <Typography variant="h6" gutterBottom>
             New Financial Account
           </Typography>
-          <form onSubmit={handleAddBeneficiary}>
+          <form onSubmit={handleAddFinancials}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <TextField
                 required
-                label="First Name"
+                label="Account Name"
                 variant="outlined"
                 margin="normal"
-                name="first_name"
-                value={newBene.first_name}
+                name="account_name"
+                value={newFinancial.account_name}
                 onChange={handleInputChange}
               />
               <TextField
                 required
-                label="Last Name"
+                label="Account Number"
                 variant="outlined"
                 margin="normal"
-                name="last_name"
-                value={newBene.last_name}
+                name="account_number"
+                value={newFinancial.account_number}
                 onChange={handleInputChange}
               />
               <TextField
                 required
-                label="E-Mail"
-                type="email"
+                label="Account Type"
                 variant="outlined"
                 margin="normal"
-                name="email"
-                value={newBene.email}
+                name="account_type"
+                value={newFinancial.account_type}
+                onChange={handleInputChange}
+              />
+              <TextField
+                label="Bank Name"
+                variant="outlined"
+                margin="normal"
+                name="bank_name"
+                value={newFinancial.bank_name}
                 onChange={handleInputChange}
               />
               <TextField
                 required
-                label="Phone Number"
-                type="input"
+                label="Account Balance"
                 variant="outlined"
                 margin="normal"
-                name="phone_number"
-                value={newBene.phone_number}
+                name="account_balance"
+                value={newFinancial.account_balance}
                 onChange={handleInputChange}
               />
-              <TextField
-                required
-                label="Relationship"
-                type="input"
-                variant="outlined"
-                margin="normal"
-                name="relationship"
-                value={newBene.relationship}
-                onChange={handleInputChange}
-              />
-              <TextField
-                required
-                label="Percentage"
-                type="input"
-                variant="outlined"
-                margin="normal"
-                name="percentage"
-                value={newBene.percentage}
-                onChange={handleInputChange}
-              />
+
               <Button
                 style={{ backgroundColor: "#0B746C", color: "white" }}
                 type="submit"
@@ -167,7 +188,7 @@ export default function Financials() {
             </Box>
           </form>
         </Box>
-      </Modal> */}
+      </Modal>
       <CardContent sx={{ pt: 0 }}>
         {data && data.getFinancials && data.getFinancials.length > 0 ? (
           values.map((financial, index) => (
@@ -243,7 +264,11 @@ export default function Financials() {
                     <DeleteIcon />
                   </Button>
                   <Button
-                  style={{ backgroundColor: "#0B746C", color: "white", marginTop:'15px'}}
+                    style={{
+                      backgroundColor: "#0B746C",
+                      color: "white",
+                      marginTop: "15px",
+                    }}
                     variant="contained"
                     onClick={() => handleSubmit(index)}
                   >
