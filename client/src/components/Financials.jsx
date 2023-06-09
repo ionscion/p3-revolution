@@ -219,6 +219,7 @@ export default function Financials() {
                     <DeleteIcon />
                   </Button>
                   <Button
+                  style={{ backgroundColor: "#0B746C", color: "white", marginTop:'15px'}}
                     variant="contained"
                     onClick={() => handleSubmit(index)}
                   >
